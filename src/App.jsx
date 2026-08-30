@@ -209,10 +209,10 @@ function App() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.9, delay: 0.1 * i }}
-                className="group border border-white/10 bg-[#070709] rounded-none overflow-hidden transition-colors hover:border-white/25"
+                className="group border border-white/10 bg-[#070709] rounded-none transition-colors hover:border-white/25 relative"
               >
                 {/* Media Container: Custom Video Player or Image Showcase */}
-                <div className="relative w-full aspect-video bg-zinc-950 overflow-hidden border-b border-white/10">
+                <div className="relative w-full aspect-video bg-zinc-950 border-b border-white/10">
                   <ProjectMedia
                     project={project}
                     fynalTab={fynalTab}
