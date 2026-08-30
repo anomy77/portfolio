@@ -18,6 +18,7 @@ function App() {
   const { scrollY } = useScroll();
   const backgroundY = useTransform(scrollY, [0, 1000], [0, 350]);
 
+  const [isPortraitHovered, setIsPortraitHovered] = useState(false);
   const [fynalTab, setFynalTab] = useState(0);
   const [selectedLightboxProject, setSelectedLightboxProject] = useState(null);
 
@@ -82,12 +83,17 @@ function App() {
         {/* Massive Background Parallax Typography (Z-5) */}
         <motion.div
           style={{ y: backgroundY }}
-          className="absolute inset-0 z-5 flex items-center justify-center select-none pointer-events-none overflow-hidden"
+          className={`absolute inset-0 z-5 flex items-center justify-center select-none pointer-events-none overflow-hidden transition-all duration-700 ease-out ${
+            isPortraitHovered ? 'scale-[1.01] opacity-100' : 'opacity-85'
+          }`}
         >
           <span 
-            className="text-[26vw] font-black tracking-[-0.06em] leading-none uppercase text-[#E4E4E7] whitespace-nowrap select-none font-sans"
+            className="text-[26vw] font-black tracking-[-0.06em] leading-none uppercase whitespace-nowrap select-none font-sans transition-colors duration-700"
             style={{
-              WebkitTextStroke: '2px rgba(212, 212, 216, 0.9)',
+              color: isPortraitHovered ? '#D4D4D8' : '#E4E4E7',
+              WebkitTextStroke: isPortraitHovered 
+                ? '2px rgba(161, 161, 170, 0.8)' 
+                : '2px rgba(212, 212, 216, 0.6)',
               letterSpacing: '-0.06em'
             }}
           >
@@ -95,12 +101,18 @@ function App() {
           </span>
         </motion.div>
 
-        {/* Portrait Cutout (Z-10) -- Sits directly in front of the text */}
-        <div className="absolute inset-0 z-10 pointer-events-none">
+        {/* Portrait Cutout (Z-10) -- Sits directly in front of the text and softly reveals background on hover */}
+        <div 
+          className="absolute inset-0 z-10 cursor-pointer flex items-center justify-center"
+          onMouseEnter={() => setIsPortraitHovered(true)}
+          onMouseLeave={() => setIsPortraitHovered(false)}
+        >
           <img
             src={heroCutout}
             alt="Gaurav Acharya"
-            className="w-full h-full object-cover object-center grayscale contrast-105"
+            className={`w-full h-full object-cover object-center grayscale contrast-105 transition-all duration-700 ease-out ${
+              isPortraitHovered ? 'opacity-80' : 'opacity-100'
+            }`}
             style={{ objectPosition: '50% 15%' }}
           />
         </div>
