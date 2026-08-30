@@ -3,404 +3,110 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gaurav Acharya — Full Stack & Browser Systems Engineer</title>
-  <meta name="description" content="Personal portfolio of Gaurav Acharya. Engineering high-performance Manifest V3 browser extensions, automated scraping engines, and AI systems.">
+  <title>Gaurav Acharya | Systems & Browser Engineer</title>
+  <meta name="description" content="Personal portfolio of Gaurav Acharya. High-performance browser extensions, automated scraping engines, and AI systems.">
   <link rel="stylesheet" href="styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
+  <div class="noise-overlay"></div>
 
-  <!-- Top Navigation Header -->
-  <header class="header-nav">
-    <div class="nav-container">
-      <a href="#home" class="logo">
-        <span class="logo-accent">Gaurav</span>Acharya
-      </a>
-      <nav class="nav-menu">
-        <a href="#home" class="nav-link active">Home</a>
-        <a href="#portfolio" class="nav-link">Portfolio</a>
-        <a href="#services" class="nav-link">Services</a>
-        <a href="#about" class="nav-link">About</a>
-        <a href="#insights" class="nav-link">Insights</a>
-        <a href="#contact" class="nav-link">Contact</a>
-      </nav>
-      <div class="nav-cta">
-        <a href="#contact" class="btn btn-electric">Work with me</a>
+  <nav class="nav-minimal">
+    <a href="#" class="nav-brand">GAURAV ACHARYA.</a>
+    <div class="nav-links">
+      <a href="#work">WORK</a>
+      <a href="#manifesto">MANIFESTO</a>
+      <a href="mailto:contact@anomy77.me" class="nav-cta">CONTACT</a>
+    </div>
+  </nav>
+
+  <header class="hero-brutalist">
+    <div class="hero-bg-glow"></div>
+    <div class="hero-container">
+      <div class="reveal-text">
+        <h1 class="huge-text">CODE.</h1>
+      </div>
+      <div class="reveal-text delay-1">
+        <h2 class="sub-huge-text">I'M EXCITED ABOUT CREATING<br>AUTONOMOUS SYSTEMS.</h2>
+      </div>
+      <div class="hero-footer reveal-text delay-2">
+        <p>Gaurav Acharya — Systems & Browser Engineer</p>
+        <p>Based in Kathmandu, Nepal</p>
       </div>
     </div>
   </header>
 
-  <!-- Hero Section with Narrative Storytelling -->
-  <section id="home" class="hero-section">
-    <div class="container hero-grid">
-      <div class="hero-content">
-        <div class="availability-pill">
-          <span class="pulse-indicator"></span>
-          <span>Available for Q3/Q4 Contracts & Custom Builds</span>
-        </div>
-        <h1 class="hero-headline">
-          Engineering precision <span class="accent-text">browser tools</span>, high-throughput scrapers, and AI systems.
-        </h1>
-        <p class="hero-narrative">
-          I am a systems and browser engineer based in Kathmandu, Nepal. I bridge the gap between complex web architectures and intuitive single-click tools—turning manual 10-hour agency workflows into autonomous 2-second operations.
-        </p>
-        <div class="hero-button-group">
-          <a href="#portfolio" class="btn btn-primary-large">Explore Portfolio</a>
-          <a href="Gaurav_Acharya_Resume.pdf" target="_blank" class="btn btn-outline-large">Download Resume (PDF)</a>
-        </div>
-        <div class="hero-metrics">
-          <div class="metric-card">
-            <span class="metric-val">3+</span>
-            <span class="metric-label">Open-Source MV3 Tools</span>
-          </div>
-          <div class="metric-card">
-            <span class="metric-val">&lt;2s</span>
-            <span class="metric-label">AI Pipeline Latency</span>
-          </div>
-          <div class="metric-card">
-            <span class="metric-val">48h</span>
-            <span class="metric-label">Prototype Turnaround</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Filterable Portfolio Showcase -->
-  <section id="portfolio" class="section-portfolio">
+  <section id="work" class="section-work">
     <div class="container">
-      <div class="section-header-row">
-        <div>
-          <span class="eyebrow">SELECTED WORKS</span>
-          <h2 class="section-heading">Featured Systems & Case Studies</h2>
-        </div>
-        <!-- Portfolio Category Filters -->
-        <div class="filter-tabs" id="portfolio-filters">
-          <button class="filter-btn active" data-filter="all">All Projects</button>
-          <button class="filter-btn" data-filter="extensions">Browser Extensions</button>
-          <button class="filter-btn" data-filter="scraping">Data & Scrapers</button>
-          <button class="filter-btn" data-filter="ai">AI Integrations</button>
-        </div>
-      </div>
+      <h2 class="section-title reveal-text"><span style="display:block;">SELECTED WORK</span></h2>
+      
+      <div class="project-list">
+        
+        <a href="https://github.com/anomy77/mapleads-lead-extractor" target="_blank" class="project-item reveal-item">
+          <div class="project-info">
+            <h3>MAPLEADS</h3>
+            <p>B2B Extractor & Parallel Web Scraper Engine</p>
+          </div>
+          <div class="project-meta">
+            <span>MV3</span>
+            <span class="view-link">VIEW SYSTEM ↗</span>
+          </div>
+        </a>
 
-      <div class="portfolio-grid" id="portfolio-grid">
+        <a href="https://github.com/anomy77/tubebrief-ai" target="_blank" class="project-item reveal-item">
+          <div class="project-info">
+            <h3>TUBEBRF.AI</h3>
+            <p>Sub-2s Video Synthesis & Audio Engine</p>
+          </div>
+          <div class="project-meta">
+            <span>LLM / API</span>
+            <span class="view-link">VIEW SYSTEM ↗</span>
+          </div>
+        </a>
 
-        <!-- Project 1: MapLeads -->
-        <article class="portfolio-card" data-category="extensions scraping">
-          <div class="card-top">
-            <div class="card-tags">
-              <span class="tag">Manifest V3</span>
-              <span class="tag">Parallel DOM Worker</span>
-              <span class="tag">CSV Engine</span>
-            </div>
-            <span class="card-year">2026</span>
+        <a href="https://github.com/anomy77/markclip-extension" target="_blank" class="project-item reveal-item">
+          <div class="project-info">
+            <h3>MARKCLIP</h3>
+            <p>DOM Serialization & AST Markdown Converter</p>
           </div>
-          <div class="card-body">
-            <h3 class="card-title">MapLeads — B2B Lead Extractor & Concurrent Email Finder</h3>
-            <p class="card-description">
-              High-throughput Google Maps lead generation extension. Features deep infinite scroll with smart stagnation auto-stop, an 8-worker parallel background website email scraper, cross-tab persistent storage, and UTF-8 BOM CSV exports.
-            </p>
-            <div class="card-results">
-              <div class="result-metric">
-                <span class="res-num">300+</span>
-                <span class="res-desc">Leads/batch extraction</span>
-              </div>
-              <div class="result-metric">
-                <span class="res-num">8x</span>
-                <span class="res-desc">Concurrent domain scans</span>
-              </div>
-              <div class="result-metric">
-                <span class="res-num">47%+</span>
-                <span class="res-desc">Verified email yield</span>
-              </div>
-            </div>
+          <div class="project-meta">
+            <span>PARSER</span>
+            <span class="view-link">VIEW SYSTEM ↗</span>
           </div>
-          <div class="card-footer">
-            <a href="https://github.com/anomy77/mapleads-lead-extractor" target="_blank" class="card-link">
-              <span>View Source Code & Demo</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
-            </a>
-          </div>
-        </article>
-
-        <!-- Project 2: TubeBrief AI -->
-        <article class="portfolio-card" data-category="extensions ai">
-          <div class="card-top">
-            <div class="card-tags">
-              <span class="tag">Google Gemini 2.0 Flash</span>
-              <span class="tag">TimedText Parser</span>
-            </div>
-            <span class="card-year">2026</span>
-          </div>
-          <div class="card-body">
-            <h3 class="card-title">TubeBrief AI — YouTube Caption Synthesis Engine</h3>
-            <p class="card-description">
-              Chrome extension that intercepts in-memory YouTube video subtitle tracks and connects directly to Gemini 2.0 Flash REST endpoints. Synthesizes 60-minute transcripts into executive summaries, study guides, and social threads in under 2 seconds.
-            </p>
-            <div class="card-results">
-              <div class="result-metric">
-                <span class="res-num">&lt;2.1s</span>
-                <span class="res-desc">End-to-end synthesis</span>
-              </div>
-              <div class="result-metric">
-                <span class="res-num">$0</span>
-                <span class="res-desc">Zero paid scraper APIs</span>
-              </div>
-              <div class="result-metric">
-                <span class="res-num">100%</span>
-                <span class="res-desc">Local token storage</span>
-              </div>
-            </div>
-          </div>
-          <div class="card-footer">
-            <a href="https://github.com/anomy77/tubebrief-ai" target="_blank" class="card-link">
-              <span>View Source Code & Demo</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
-            </a>
-          </div>
-        </article>
-
-        <!-- Project 3: MarkClip -->
-        <article class="portfolio-card" data-category="extensions">
-          <div class="card-top">
-            <div class="card-tags">
-              <span class="tag">DOM Serialization</span>
-              <span class="tag">Markdown AST</span>
-            </div>
-            <span class="card-year">2026</span>
-          </div>
-          <div class="card-body">
-            <h3 class="card-title">MarkClip — Web-to-Markdown Knowledge Base Clipper</h3>
-            <p class="card-description">
-              Lightweight browser extension that strips web boilerplate, preserves structural headings, code fences, and tables, and converts articles into clean GitHub-flavored Markdown with automated YAML front matter for Obsidian and Notion.
-            </p>
-            <div class="card-results">
-              <div class="result-metric">
-                <span class="res-num">&lt;8 KB</span>
-                <span class="res-desc">Zero-dependency bundle</span>
-              </div>
-              <div class="result-metric">
-                <span class="res-num">1-Click</span>
-                <span class="res-desc">Obsidian/Notion ready</span>
-              </div>
-              <div class="result-metric">
-                <span class="res-num">YAML</span>
-                <span class="res-desc">Automated metadata</span>
-              </div>
-            </div>
-          </div>
-          <div class="card-footer">
-            <a href="https://github.com/anomy77/markclip-extension" target="_blank" class="card-link">
-              <span>View Source Code & Demo</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
-            </a>
-          </div>
-        </article>
+        </a>
 
       </div>
     </div>
   </section>
 
-  <!-- Services & Scope of Work -->
-  <section id="services" class="section-services">
+  <section id="manifesto" class="section-manifesto">
     <div class="container">
-      <div class="section-header-centered">
-        <span class="eyebrow">SERVICES & PACKAGES</span>
-        <h2 class="section-heading">How We Can Work Together</h2>
-        <p class="section-subtext">Direct freelance engineering contracts with guaranteed 48 to 72-hour working prototypes.</p>
+      <div class="reveal-text">
+        <h2 class="huge-text-outline">EVERY GREAT SYSTEM HAS THREE PARTS...</h2>
       </div>
-
-      <div class="services-matrix">
-        <div class="service-box">
-          <div class="service-rate">$350 — $550</div>
-          <h3 class="service-name">Custom Manifest V3 Extensions</h3>
-          <p class="service-summary">End-to-end Chrome & Edge extension development tailored for internal agency operations or client-facing SaaS products.</p>
-          <ul class="service-checklist">
-            <li>Interactive custom popup & side-panel interfaces</li>
-            <li>Background service workers & content script DOM injection</li>
-            <li>Full chrome.storage persistence & secure token management</li>
-            <li>Complete MIT-licensed source code & store submission ready</li>
-          </ul>
-        </div>
-
-        <div class="service-box highlighted">
-          <div class="highlight-tag">HIGH DEMAND</div>
-          <div class="service-rate">$300 — $500</div>
-          <h3 class="service-name">Lead Extraction & Web Data Engines</h3>
-          <p class="service-summary">Automated web scrapers that extract high-ticket business contacts, decision-maker emails, and market directories into formatted spreadsheets.</p>
-          <ul class="service-checklist">
-            <li>Infinite-scroll DOM automation with anti-stall handlers</li>
-            <li>8x parallel background website email & contact discovery</li>
-            <li>UTF-8 BOM Excel & CSV export pipelines</li>
-            <li>Zero ongoing monthly API fees—100% offline & local</li>
-          </ul>
-        </div>
-
-        <div class="service-box">
-          <div class="service-rate">$350 — $650</div>
-          <h3 class="service-name">AI Pipeline & Audio Integrations</h3>
-          <p class="service-summary">Integrating state-of-the-art LLMs (Gemini, Claude, OpenAI) and real-time audio systems into existing web or desktop applications.</p>
-          <ul class="service-checklist">
-            <li>Sub-2-second streaming LLM synthesis pipelines</li>
-            <li>Real-time Speech-to-Text via Deepgram WebSockets</li>
-            <li>Python audio stream routing (PyAudio, Ring-Buffers)</li>
-            <li>Structured JSON schema generation & error handling</li>
-          </ul>
-        </div>
+      <div class="manifesto-content">
+        <p class="large-body reveal-item">1. ZERO BLOAT.</p>
+        <p class="large-body reveal-item">2. EXTREME SPEED.</p>
+        <p class="large-body reveal-item">3. LOCAL FIRST.</p>
+        <p class="standard-body reveal-item">I bridge the gap between complex web architectures and intuitive tools—turning 10-hour agency workflows into 2-second autonomous operations.</p>
       </div>
     </div>
   </section>
 
-  <!-- About Me & Engineering Philosophy -->
-  <section id="about" class="section-about">
-    <div class="container about-grid">
-      <div class="about-narrative">
-        <span class="eyebrow">ABOUT ME</span>
-        <h2 class="section-heading">Architecting tools that do the heavy lifting.</h2>
-        <div class="about-text">
-          <p>
-            I am a full-stack and browser systems developer based in Kathmandu, Nepal. My engineering philosophy is simple: <strong>build lightweight, resilient software that solves immediate operational bottlenecks.</strong>
-          </p>
-          <p>
-            While many tools in the market rely on bloated enterprise subscriptions, slow cloud webhooks, and recurring API costs, I engineer local-first browser extensions and scraping engines that execute directly on the user's machine with zero runtime overhead.
-          </p>
-          <p>
-            Whether automating Google Maps prospecting for commercial real estate brokers or building sub-second AI subtitle parsers, I write clean, modular ES6+ JavaScript and Python architectures designed to scale.
-          </p>
-        </div>
-      </div>
-      <div class="about-spec-box">
-        <h3 class="spec-title">Core Technical Stack</h3>
-        <div class="spec-grid">
-          <div class="spec-item">
-            <span class="spec-label">Browser:</span>
-            <span class="spec-val">Chrome Manifest V3, Service Workers, DOM APIs</span>
-          </div>
-          <div class="spec-item">
-            <span class="spec-label">Languages:</span>
-            <span class="spec-val">JavaScript (ES6+), TypeScript, Python 3.x, PHP, SQL</span>
-          </div>
-          <div class="spec-item">
-            <span class="spec-label">AI & Audio:</span>
-            <span class="spec-val">Google Gemini 2.0 Flash, Deepgram WebSockets, PyAudio</span>
-          </div>
-          <div class="spec-item">
-            <span class="spec-label">Data:</span>
-            <span class="spec-val">UTF-8 BOM CSV Engines, Regex/Mailto Parsers</span>
-          </div>
-          <div class="spec-item">
-            <span class="spec-label">Location:</span>
-            <span class="spec-val">Kathmandu, Nepal (UTC+5:45)</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Technical Insights & Blog Preview -->
-  <section id="insights" class="section-insights">
+  <footer class="footer-brutalist">
     <div class="container">
-      <div class="section-header-row">
-        <div>
-          <span class="eyebrow">INSIGHTS & ARCHITECTURE</span>
-          <h2 class="section-heading">Engineering Notes & Case Studies</h2>
+      <div class="reveal-text">
+        <h2 class="footer-huge">LET'S TALK.</h2>
+      </div>
+      <div class="footer-bottom reveal-item">
+        <a href="mailto:contact@anomy77.me" class="footer-email">CONTACT@ANOMY77.ME</a>
+        <div class="footer-links">
+          <a href="https://github.com/anomy77" target="_blank">GITHUB</a>
+          <a href="Gaurav_Acharya_Resume.pdf" target="_blank">RESUME (PDF)</a>
         </div>
       </div>
-
-      <div class="insights-grid">
-        <article class="insight-card">
-          <span class="insight-date">August 2026</span>
-          <h3 class="insight-title">Overcoming DOM Stagnation in Manifest V3 Google Maps Scraping</h3>
-          <p class="insight-summary">
-            How virtualized list rendering in Google Maps breaks traditional scroll listeners, and how implementing smooth card anchoring and nudge observers yields 300+ continuous leads.
-          </p>
-          <a href="https://github.com/anomy77/mapleads-lead-extractor" target="_blank" class="insight-link">Read Architecture Note &rarr;</a>
-        </article>
-
-        <article class="insight-card">
-          <span class="insight-date">August 2026</span>
-          <h3 class="insight-title">Sub-2-Second Video Synthesis with Gemini 2.0 Flash REST APIs</h3>
-          <p class="insight-summary">
-            Extracting in-memory timedtext caption tracks directly from YouTube DOM contexts to bypass server transcription overhead entirely.
-          </p>
-          <a href="https://github.com/anomy77/tubebrief-ai" target="_blank" class="insight-link">Read Architecture Note &rarr;</a>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- Interactive Project Brief Contact Form -->
-  <section id="contact" class="section-contact">
-    <div class="container contact-wrapper">
-      <div class="contact-header">
-        <span class="eyebrow">START A PROJECT</span>
-        <h2 class="section-heading">Let's build your next tool.</h2>
-        <p class="contact-subtext">Submit your project requirements below. I review all briefs and respond within 12 hours.</p>
-      </div>
-
-      <form id="project-brief-form" class="brief-form">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="client-name">Your Name</label>
-            <input type="text" id="client-name" required placeholder="e.g. Alex Miller">
-          </div>
-          <div class="form-group">
-            <label for="client-email">Email Address</label>
-            <input type="email" id="client-email" required placeholder="e.g. alex@company.com">
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="project-type">Project Type</label>
-            <select id="project-type" required>
-              <option value="Custom Manifest V3 Chrome Extension">Custom Chrome / Edge Extension ($350 - $550)</option>
-              <option value="Web Scraper & Lead Data Pipeline">Web Scraper & Lead Extraction Engine ($300 - $500)</option>
-              <option value="AI Integration & Audio System">AI Pipeline / Audio Integration ($350 - $650)</option>
-              <option value="Full-Stack Web App">Full Stack Web Application ($500+)</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="project-timeline">Target Timeline</label>
-            <select id="project-timeline">
-              <option value="Urgent (48 - 72 Hours)">Urgent (48 - 72 Hours)</option>
-              <option value="1 - 2 Weeks" selected>1 - 2 Weeks</option>
-              <option value="Flexible">Flexible</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="project-brief">Project Details & Objectives</label>
-          <textarea id="project-brief" rows="4" required placeholder="Describe what you want to build, target websites/platforms, and key features..."></textarea>
-        </div>
-
-        <button type="submit" class="btn btn-electric-large">
-          <span>Send Project Brief</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-        </button>
-      </form>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer-main">
-    <div class="container footer-layout">
-      <div class="footer-brand">
-        <span class="brand-text">Gaurav Acharya</span>
-        <p class="footer-tagline">Engineering high-performance browser systems and autonomous web tools.</p>
-      </div>
-      <div class="footer-socials">
-        <a href="https://github.com/anomy77" target="_blank">GitHub</a>
-        <a href="Gaurav_Acharya_Resume.pdf" target="_blank">Resume PDF</a>
-        <a href="mailto:contact@anomy77.me">Email</a>
-      </div>
-    </div>
-    <div class="container footer-bottom">
-      <p>&copy; 2026 Gaurav Acharya. Open-source under the MIT License.</p>
-      <p>Kathmandu, Nepal &bull; Built with semantic HTML5 &amp; CSS3</p>
     </div>
   </footer>
 
