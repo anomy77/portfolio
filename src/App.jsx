@@ -9,6 +9,7 @@ import demoMarkclip from '/videos/demo-2.mp4?url';
 
 function App() {
   const [activeTab, setActiveTab] = useState('all');
+  const [fynalTab, setFynalTab] = useState(0);
 
   const projects = [
     {
@@ -213,17 +214,33 @@ function App() {
                       className="w-full h-full object-cover object-center"
                     />
                   ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 w-full h-full bg-zinc-900">
+                    <div className="relative w-full h-full bg-zinc-950 flex flex-col justify-center items-center overflow-hidden">
                       <img
-                        src={project.media}
-                        alt={`${project.name} Screenshot 1`}
-                        className="w-full h-full object-cover border-b md:border-b-0 md:border-r border-white/10"
+                        src={fynalTab === 0 ? project.media : project.extraMedia}
+                        alt={fynalTab === 0 ? "Fynal Platform Overview" : "Fynal Studio IDE"}
+                        className="w-full h-full object-contain object-center transition-all duration-300"
                       />
-                      <img
-                        src={project.extraMedia}
-                        alt={`${project.name} Screenshot 2`}
-                        className="w-full h-full object-cover hidden md:block"
-                      />
+                      {/* Interactive View Switcher Tabs */}
+                      <div className="absolute bottom-4 left-4 z-20 flex gap-1 bg-black/80 backdrop-blur-md p-1 border border-white/10">
+                        <button
+                          type="button"
+                          onClick={() => setFynalTab(0)}
+                          className={`px-3 py-1 text-[10px] font-bold tracking-wider uppercase transition-colors ${
+                            fynalTab === 0 ? 'bg-white text-black' : 'text-zinc-400 hover:text-white'
+                          }`}
+                        >
+                          01 Platform Overview
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setFynalTab(1)}
+                          className={`px-3 py-1 text-[10px] font-bold tracking-wider uppercase transition-colors ${
+                            fynalTab === 1 ? 'bg-white text-black' : 'text-zinc-400 hover:text-white'
+                          }`}
+                        >
+                          02 Studio IDE & Code
+                        </button>
+                      </div>
                     </div>
                   )}
                   <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-md px-3 py-1 text-[10px] font-bold tracking-[0.2em] text-white/70 border border-white/10 uppercase">
