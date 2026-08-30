@@ -5,15 +5,14 @@ export function ProjectMedia({ project, fynalTab, setFynalTab, onOpenLightbox })
   const canvasRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
-  const [ambientMode, setAmbientMode] = useState(true);
   const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState('0:00');
   const [duration, setDuration] = useState('0:00');
   const [isHovered, setIsHovered] = useState(false);
 
-  // Real-time Canvas Ambient Glow Renderer
+  // Real-time Canvas Ambient Glow (Seamless Background Effect)
   useEffect(() => {
-    if (project.type !== 'video' || !ambientMode) return;
+    if (project.type !== 'video') return;
 
     let animId;
     const canvas = canvasRef.current;
@@ -35,7 +34,7 @@ export function ProjectMedia({ project, fynalTab, setFynalTab, onOpenLightbox })
 
     animId = requestAnimationFrame(renderAmbientGlow);
     return () => cancelAnimationFrame(animId);
-  }, [project.type, ambientMode]);
+  }, [project.type]);
 
   const formatTime = (seconds) => {
     if (isNaN(seconds)) return '0:00';
@@ -51,8 +50,7 @@ export function ProjectMedia({ project, fynalTab, setFynalTab, onOpenLightbox })
       setProgress((current / total) * 100);
       setCurrentTime(formatTime(current));
 
-      // Also ensure canvas draws on timeupdate
-      if (ambientMode && canvasRef.current && videoRef.current) {
+      if (canvasRef.current && videoRef.current) {
         try {
           const ctx = canvasRef.current.getContext('2d', { alpha: false });
           ctx.drawImage(videoRef.current, 0, 0, 32, 18);
@@ -87,11 +85,6 @@ export function ProjectMedia({ project, fynalTab, setFynalTab, onOpenLightbox })
     setIsMuted(nextMuted);
   };
 
-  const toggleAmbient = (e) => {
-    e?.stopPropagation();
-    setAmbientMode(!ambientMode);
-  };
-
   const handleSeek = (e) => {
     e.stopPropagation();
     if (!videoRef.current) return;
@@ -114,12 +107,21 @@ export function ProjectMedia({ project, fynalTab, setFynalTab, onOpenLightbox })
           className="w-full h-full object-contain object-center transition-transform duration-500 group-hover/img:scale-[1.01]"
         />
 
-        {/* Top Left Tag */}
-        <div className="absolute top-4 left-4 z-20 pointer-events-none">
-          <div className="bg-black/80 backdrop-blur-md px-2.5 py-1 border border-white/10 text-[9px] font-mono tracking-widest text-white/70 uppercase flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
-            <span>PLATFORM SHOWCASE</span>
-          </div>
+        {/* Minimal Corner Expand Button (SVG Only) */}
+        <div className="absolute top-4 right-4 z-20">
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onOpenLightbox(project);
+            }}
+            title="Expand Fullscreen"
+            className="w-8 h-8 rounded-full bg-black/80 hover:bg-white text-white hover:text-black transition-all backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg"
+          >
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7" />
+            </svg>
+          </button>
         </div>
 
         {/* Interactive View Switcher Tabs */}
@@ -134,7 +136,7 @@ export function ProjectMedia({ project, fynalTab, setFynalTab, onOpenLightbox })
               fynalTab === 0 ? 'bg-white text-black' : 'text-zinc-400 hover:text-white'
             }`}
           >
-            01 Platform Overview
+            01 Overview
           </button>
           <button
             type="button"
@@ -143,13 +145,8 @@ export function ProjectMedia({ project, fynalTab, setFynalTab, onOpenLightbox })
               fynalTab === 1 ? 'bg-white text-black' : 'text-zinc-400 hover:text-white'
             }`}
           >
-            02 Studio IDE & Code
+            02 Studio IDE
           </button>
-        </div>
-
-        {/* Tag badge */}
-        <div className="absolute top-4 right-4 bg-black/80 backdrop-blur-md px-3 py-1 text-[10px] font-bold tracking-[0.2em] text-white/70 border border-white/10 uppercase">
-          {project.tag}
         </div>
       </div>
     );
@@ -162,17 +159,15 @@ export function ProjectMedia({ project, fynalTab, setFynalTab, onOpenLightbox })
       onMouseLeave={() => setIsHovered(false)}
       onClick={() => onOpenLightbox(project)}
     >
-      {/* YouTube-Style Ambient Glow Canvas that radiates around the floating screen */}
-      {ambientMode && (
-        <canvas
-          ref={canvasRef}
-          width={32}
-          height={18}
-          className="absolute inset-[-6%] w-[112%] h-[112%] z-0 blur-3xl opacity-45 saturate-125 pointer-events-none transition-opacity duration-700"
-        />
-      )}
+      {/* YouTube-Style Ambient Glow Canvas */}
+      <canvas
+        ref={canvasRef}
+        width={32}
+        height={18}
+        className="absolute inset-[-6%] w-[112%] h-[112%] z-0 blur-3xl opacity-40 saturate-125 pointer-events-none transition-opacity duration-700"
+      />
 
-      {/* Floating Video Screen Container */}
+      {/* Floating Video Screen */}
       <div className="relative z-10 w-full h-full overflow-hidden bg-black rounded-2xl border border-white/15 shadow-2xl flex items-center justify-center">
         <video
           ref={videoRef}
@@ -187,43 +182,21 @@ export function ProjectMedia({ project, fynalTab, setFynalTab, onOpenLightbox })
           className="w-full h-full object-cover object-center"
         />
 
-        {/* Top Bar Indicators inside player */}
-        <div className="absolute top-3 inset-x-3 flex justify-between items-center z-20 pointer-events-none">
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-2 bg-black/80 backdrop-blur-md px-2.5 py-1 border border-white/15">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span className="text-[9px] font-mono tracking-widest text-white/70 uppercase">LIVE CAPTURE</span>
-            </div>
-
-            {/* Ambient Mode Badge Toggle */}
-            <button
-              type="button"
-              onClick={toggleAmbient}
-              className={`pointer-events-auto backdrop-blur-md px-2.5 py-1 text-[9px] font-mono tracking-widest border uppercase transition-colors ${
-                ambientMode 
-                  ? 'bg-amber-500/20 border-amber-500/50 text-amber-300 font-bold' 
-                  : 'bg-black/80 border-white/15 text-zinc-400 hover:text-white'
-              }`}
-            >
-              AMBIENT: {ambientMode ? 'ON' : 'OFF'}
-            </button>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                onOpenLightbox(project);
-              }}
-              className="pointer-events-auto bg-black/80 hover:bg-white hover:text-black transition-colors backdrop-blur-md px-3 py-1 text-[10px] font-bold tracking-widest text-white border border-white/20 uppercase flex items-center gap-1.5"
-            >
-              <span>EXPAND</span>
-              <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7" />
-              </svg>
-            </button>
-          </div>
+        {/* Minimal Corner Expand Button (SVG Only) */}
+        <div className="absolute top-3 right-3 z-20">
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onOpenLightbox(project);
+            }}
+            title="Expand Fullscreen"
+            className="w-8 h-8 rounded-full bg-black/80 hover:bg-white text-white hover:text-black transition-all backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg"
+          >
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7" />
+            </svg>
+          </button>
         </div>
 
         {/* Center Play/Pause Overlay Cue on Hover */}
@@ -263,7 +236,7 @@ export function ProjectMedia({ project, fynalTab, setFynalTab, onOpenLightbox })
               <button
                 type="button"
                 onClick={togglePlay}
-                className="hover:text-white transition-colors"
+                className="hover:text-white transition-colors font-medium"
               >
                 {isPlaying ? 'PAUSE' : 'PLAY'}
               </button>

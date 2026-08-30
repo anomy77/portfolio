@@ -139,20 +139,6 @@ export function MediaLightbox({ project, onClose, fynalTab, setFynalTab }) {
             <span className="text-[10px] font-mono tracking-widest text-zinc-400 border border-white/15 px-2.5 py-0.5 uppercase">
               {project.tag}
             </span>
-
-            {project.type === 'video' && (
-              <button
-                type="button"
-                onClick={toggleAmbient}
-                className={`px-3 py-1 text-[10px] font-mono tracking-widest border uppercase transition-colors ${
-                  ambientMode 
-                    ? 'bg-amber-500/20 border-amber-500/40 text-amber-300' 
-                    : 'bg-white/5 border-white/15 text-zinc-400 hover:text-white'
-                }`}
-              >
-                AMBIENT GLOW: {ambientMode ? 'ON' : 'OFF'}
-              </button>
-            )}
           </div>
 
           <div className="flex items-center gap-4">
