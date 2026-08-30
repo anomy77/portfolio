@@ -181,7 +181,7 @@ export function MediaLightbox({ project, onClose, fynalTab, setFynalTab }) {
                   ref={canvasRef}
                   width={32}
                   height={18}
-                  className="absolute inset-[-20%] w-[140%] h-[140%] -z-10 blur-3xl opacity-80 saturate-200 pointer-events-none transition-opacity duration-700"
+                  className="absolute inset-[-12%] w-[124%] h-[124%] -z-10 blur-3xl opacity-40 saturate-125 pointer-events-none transition-opacity duration-700"
                 />
               )}
 

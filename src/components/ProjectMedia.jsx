@@ -168,7 +168,7 @@ export function ProjectMedia({ project, fynalTab, setFynalTab, onOpenLightbox })
           ref={canvasRef}
           width={32}
           height={18}
-          className="absolute inset-[-10%] w-[120%] h-[120%] z-0 blur-3xl opacity-85 saturate-200 pointer-events-none transition-opacity duration-700"
+          className="absolute inset-[-8%] w-[116%] h-[116%] z-0 blur-3xl opacity-40 saturate-125 pointer-events-none transition-opacity duration-700"
         />
       )}
 
