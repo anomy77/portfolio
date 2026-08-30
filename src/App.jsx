@@ -209,10 +209,10 @@ function App() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.9, delay: 0.1 * i }}
-                className="group border border-white/10 bg-[#070709] rounded-none transition-colors hover:border-white/25 relative"
+                className="group relative flex flex-col gap-8"
               >
-                {/* Media Container: Custom Video Player or Image Showcase */}
-                <div className="relative w-full aspect-video bg-zinc-950 border-b border-white/10">
+                {/* Floating Media Screen Container */}
+                <div className="relative w-full aspect-video">
                   <ProjectMedia
                     project={project}
                     fynalTab={fynalTab}
@@ -221,22 +221,22 @@ function App() {
                   />
                 </div>
 
-                {/* Project Details */}
-                <div className="p-8 md:p-12 flex flex-col justify-between">
-                  <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-8">
+                {/* Floating Project Details */}
+                <div className="flex flex-col gap-6 px-2 md:px-4">
+                  <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
                     <div>
-                      <h4 className="text-3xl md:text-4xl font-black tracking-tight mb-2 group-hover:text-gray-300 transition-colors">
+                      <h4 className="text-3xl md:text-5xl font-black tracking-tight mb-2 group-hover:text-gray-300 transition-colors">
                         {project.name}
                       </h4>
-                      <p className="text-sm font-medium text-white/50 mb-4">{project.subtitle}</p>
-                      <p className="text-base text-zinc-400 max-w-2xl leading-relaxed">{project.desc}</p>
+                      <p className="text-sm font-medium text-white/50 mb-3">{project.subtitle}</p>
+                      <p className="text-base text-zinc-400 max-w-3xl leading-relaxed">{project.desc}</p>
                     </div>
 
                     <div className="flex items-center gap-3 shrink-0">
                       <button
                         type="button"
                         onClick={() => setSelectedLightboxProject(project)}
-                        className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 px-4 py-3 text-xs font-bold tracking-widest uppercase transition-colors"
+                        className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 px-5 py-3 text-xs font-bold tracking-widest uppercase transition-colors"
                       >
                         <span>Demo</span>
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -258,10 +258,10 @@ function App() {
                     </div>
                   </div>
 
-                  {/* Metrics Pills */}
-                  <div className="flex flex-wrap gap-3 pt-6 border-t border-white/5">
+                  {/* Metrics Pills without divider line */}
+                  <div className="flex flex-wrap gap-2.5">
                     {project.metrics.map((m) => (
-                      <span key={m} className="text-xs font-mono text-zinc-400 bg-white/[0.03] border border-white/5 px-3 py-1">
+                      <span key={m} className="text-xs font-mono text-zinc-400 bg-white/[0.04] border border-white/10 px-3.5 py-1.5 rounded-none">
                         {m}
                       </span>
                     ))}

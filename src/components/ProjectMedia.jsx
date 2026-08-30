@@ -105,7 +105,7 @@ export function ProjectMedia({ project, fynalTab, setFynalTab, onOpenLightbox })
   if (project.type === 'image') {
     return (
       <div 
-        className="relative w-full aspect-video bg-zinc-950 flex flex-col justify-center items-center overflow-hidden cursor-pointer group/img"
+        className="relative w-full aspect-video bg-transparent flex flex-col justify-center items-center overflow-hidden cursor-pointer group/img rounded-2xl border border-white/15 shadow-2xl"
         onClick={() => onOpenLightbox(project)}
       >
         <img
@@ -157,23 +157,23 @@ export function ProjectMedia({ project, fynalTab, setFynalTab, onOpenLightbox })
 
   return (
     <div
-      className="relative w-full aspect-video bg-zinc-950 group/vid cursor-pointer p-2 md:p-4 flex items-center justify-center"
+      className="relative w-full aspect-video bg-transparent group/vid cursor-pointer flex items-center justify-center"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={() => onOpenLightbox(project)}
     >
-      {/* YouTube-Style Ambient Glow Canvas that radiates around the video */}
+      {/* YouTube-Style Ambient Glow Canvas that radiates around the floating screen */}
       {ambientMode && (
         <canvas
           ref={canvasRef}
           width={32}
           height={18}
-          className="absolute inset-[-8%] w-[116%] h-[116%] z-0 blur-3xl opacity-40 saturate-125 pointer-events-none transition-opacity duration-700"
+          className="absolute inset-[-6%] w-[112%] h-[112%] z-0 blur-3xl opacity-45 saturate-125 pointer-events-none transition-opacity duration-700"
         />
       )}
 
-      {/* Video Container Box */}
-      <div className="relative z-10 w-full h-full overflow-hidden bg-black border border-white/10 shadow-2xl flex items-center justify-center">
+      {/* Floating Video Screen Container */}
+      <div className="relative z-10 w-full h-full overflow-hidden bg-black rounded-2xl border border-white/15 shadow-2xl flex items-center justify-center">
         <video
           ref={videoRef}
           src={project.videoUrl}
