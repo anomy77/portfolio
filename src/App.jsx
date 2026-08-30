@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import heroImage from '/hero-image.png?url';
+import heroCutout from '/hero-cutout.png?url';
 import fynal1 from '/images/fynal-1.png?url';
 import fynal2 from '/images/fynal-2.png?url';
 import demoMapleads from '/videos/demo-3.mp4?url';
@@ -75,30 +76,34 @@ function App() {
   return (
     <div className="bg-[#09090B] text-[#E4E4E7] font-sans min-h-screen selection:bg-white selection:text-black">
 
-      {/* ===== SECTION 1: Full-Bleed Portrait Hero with Z-Axis Parallax Depth ===== */}
-      <section className="relative h-screen w-full overflow-hidden bg-white [mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)]">
+      {/* ===== SECTION 1: Full-Bleed Portrait Hero with True Z-Axis Depth ===== */}
+      <section className="relative h-screen w-full overflow-hidden bg-white [mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)] flex items-center justify-center">
 
-        {/* Portrait Image (Z-0) */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
+        {/* Massive Background Parallax Typography (Z-5) */}
+        <motion.div
+          style={{ y: backgroundY }}
+          className="absolute inset-0 z-5 flex items-center justify-center select-none pointer-events-none overflow-hidden"
+        >
+          <span 
+            className="text-[26vw] font-black tracking-[-0.06em] leading-none uppercase text-[#E4E4E7] whitespace-nowrap select-none font-sans"
+            style={{
+              WebkitTextStroke: '2px rgba(212, 212, 216, 0.9)',
+              letterSpacing: '-0.06em'
+            }}
+          >
+            SOLVE IT
+          </span>
+        </motion.div>
+
+        {/* Portrait Cutout (Z-10) -- Sits directly in front of the text */}
+        <div className="absolute inset-0 z-10 pointer-events-none">
           <img
-            src={heroImage}
+            src={heroCutout}
             alt="Gaurav Acharya"
             className="w-full h-full object-cover object-center grayscale contrast-105"
             style={{ objectPosition: '50% 15%' }}
           />
         </div>
-
-        {/* Massive Parallax Typography with Multiply Blend (Z-10) */}
-        <motion.div
-          style={{ y: backgroundY }}
-          className="absolute inset-0 z-10 flex items-center justify-center select-none pointer-events-none overflow-hidden mix-blend-multiply"
-        >
-          <span 
-            className="text-[24vw] font-black tracking-[-0.05em] leading-none uppercase text-[#8E8E93] whitespace-nowrap select-none font-sans"
-          >
-            SOLVE IT
-          </span>
-        </motion.div>
 
         {/* Smooth bottom blend overlay (Z-15) */}
         <div className="absolute bottom-0 inset-x-0 h-48 bg-gradient-to-t from-[#09090B] via-[#09090B]/70 to-transparent z-15 pointer-events-none"></div>
