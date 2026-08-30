@@ -6,29 +6,28 @@ export function MediaLightbox({ project, onClose, fynalTab, setFynalTab }) {
   const canvasRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
-  const [ambientMode, setAmbientMode] = useState(true);
   const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState('0:00');
   const [duration, setDuration] = useState('0:00');
-  const [playbackSpeed, setPlaybackSpeed] = useState(1);
+  const [isHovered, setIsHovered] = useState(false);
 
-  // Real-time Ambient Mode for Lightbox
+  // Real-time Canvas Ambient Glow for Lightbox
   useEffect(() => {
-    if (project.type !== 'video' || !ambientMode) return;
+    if (project.type !== 'video') return;
 
     let animId;
     const canvas = canvasRef.current;
     const video = videoRef.current;
     if (!canvas || !video) return;
 
-    const ctx = canvas.getContext('2d', { willReadFrequently: false });
+    const ctx = canvas.getContext('2d', { alpha: false });
 
     const renderAmbientGlow = () => {
-      if (video && !video.paused && !video.ended && video.readyState >= 2) {
+      if (video && !video.paused && !video.ended) {
         try {
           ctx.drawImage(video, 0, 0, 32, 18);
         } catch (e) {
-          // Ignore transient cross-origin frame capture errors
+          // ignore
         }
       }
       animId = requestAnimationFrame(renderAmbientGlow);
@@ -36,7 +35,7 @@ export function MediaLightbox({ project, onClose, fynalTab, setFynalTab }) {
 
     animId = requestAnimationFrame(renderAmbientGlow);
     return () => cancelAnimationFrame(animId);
-  }, [project.type, ambientMode]);
+  }, [project.type]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -63,17 +62,24 @@ export function MediaLightbox({ project, onClose, fynalTab, setFynalTab }) {
       const total = videoRef.current.duration || 1;
       setProgress((current / total) * 100);
       setCurrentTime(formatTime(current));
+
+      if (canvasRef.current && videoRef.current) {
+        try {
+          const ctx = canvasRef.current.getContext('2d', { alpha: false });
+          ctx.drawImage(videoRef.current, 0, 0, 32, 18);
+        } catch (e) {}
+      }
     }
   };
 
   const handleLoadedMetadata = () => {
     if (videoRef.current) {
       setDuration(formatTime(videoRef.current.duration));
-      videoRef.current.playbackRate = playbackSpeed;
     }
   };
 
-  const togglePlay = () => {
+  const togglePlay = (e) => {
+    e?.stopPropagation();
     if (!videoRef.current) return;
     if (isPlaying) {
       videoRef.current.pause();
@@ -84,38 +90,22 @@ export function MediaLightbox({ project, onClose, fynalTab, setFynalTab }) {
     }
   };
 
-  const toggleMute = () => {
+  const toggleMute = (e) => {
+    e?.stopPropagation();
     if (!videoRef.current) return;
     const nextMuted = !isMuted;
     videoRef.current.muted = nextMuted;
     setIsMuted(nextMuted);
   };
 
-  const toggleAmbient = (e) => {
-    e?.stopPropagation();
-    setAmbientMode(!ambientMode);
-  };
-
-  const handleSpeedChange = (speed) => {
-    setPlaybackSpeed(speed);
-    if (videoRef.current) {
-      videoRef.current.playbackRate = speed;
-    }
-  };
-
   const handleSeek = (e) => {
+    e.stopPropagation();
     if (!videoRef.current) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
     const width = rect.width;
     const newTime = (clickX / width) * videoRef.current.duration;
     videoRef.current.currentTime = newTime;
-  };
-
-  const skipSeconds = (sec) => {
-    if (videoRef.current) {
-      videoRef.current.currentTime = Math.max(0, Math.min(videoRef.current.duration, videoRef.current.currentTime + sec));
-    }
   };
 
   if (!project) return null;
@@ -126,191 +116,174 @@ export function MediaLightbox({ project, onClose, fynalTab, setFynalTab }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 bg-black/95 backdrop-blur-2xl flex flex-col justify-between p-4 md:p-8"
+        className="fixed inset-0 z-50 bg-black/95 backdrop-blur-3xl flex items-center justify-center p-4 md:p-12 cursor-pointer"
         onClick={onClose}
       >
-        {/* Top Header Bar */}
-        <div 
-          className="flex justify-between items-center z-20 pb-4 border-b border-white/10"
-          onClick={(e) => e.stopPropagation()}
+        {/* Minimal Floating Close Button (SVG Only) */}
+        <button
+          type="button"
+          onClick={onClose}
+          title="Close (ESC)"
+          className="absolute top-6 right-6 z-50 w-10 h-10 rounded-full bg-white/10 hover:bg-white text-white hover:text-black transition-all border border-white/20 flex items-center justify-center shadow-2xl"
         >
-          <div className="flex items-center gap-4">
-            <h3 className="text-xl md:text-2xl font-black tracking-tight text-white">{project.name}</h3>
-            <span className="text-[10px] font-mono tracking-widest text-zinc-400 border border-white/15 px-2.5 py-0.5 uppercase">
-              {project.tag}
-            </span>
-          </div>
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
 
-          <div className="flex items-center gap-4">
-            <span className="text-[10px] font-mono text-zinc-500 hidden md:inline-block">PRESS ESC OR SPACE</span>
-            <button
-              type="button"
-              onClick={onClose}
-              className="text-xs font-mono tracking-widest text-zinc-400 hover:text-white transition-colors bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-2 uppercase"
-            >
-              Close [ESC]
-            </button>
-          </div>
-        </div>
-
-        {/* Center Media Viewport */}
+        {/* Center Floating Viewport */}
         <div 
-          className="relative flex-1 flex items-center justify-center my-4 overflow-hidden"
+          className="relative w-full max-w-6xl aspect-video cursor-default flex items-center justify-center"
           onClick={(e) => e.stopPropagation()}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
           {project.type === 'video' ? (
-            <div className="relative w-full max-w-5xl aspect-video bg-zinc-950 border border-white/15 shadow-2xl overflow-visible flex items-center justify-center">
+            <div className="relative w-full h-full flex items-center justify-center">
               
-              {/* YouTube Ambient Glow Canvas */}
-              {ambientMode && (
-                <canvas
-                  ref={canvasRef}
-                  width={32}
-                  height={18}
-                  className="absolute inset-[-12%] w-[124%] h-[124%] -z-10 blur-3xl opacity-40 saturate-125 pointer-events-none transition-opacity duration-700"
-                />
-              )}
-
-              <video
-                ref={videoRef}
-                src={project.videoUrl}
-                playsInline
-                autoPlay
-                muted={isMuted}
-                onTimeUpdate={handleTimeUpdate}
-                onLoadedMetadata={handleLoadedMetadata}
-                onClick={togglePlay}
-                className="relative z-10 w-full h-full object-contain cursor-pointer"
+              {/* Soft Ambient Glow */}
+              <canvas
+                ref={canvasRef}
+                width={32}
+                height={18}
+                className="absolute inset-[-8%] w-[116%] h-[116%] z-0 blur-3xl opacity-45 saturate-125 pointer-events-none transition-opacity duration-700"
               />
 
-              {/* Bottom Custom Controller Overlay in Modal */}
-              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/95 via-black/80 to-transparent p-4 z-20">
-                {/* Scrubbing bar */}
-                <div 
-                  className="relative w-full h-1.5 bg-white/20 hover:h-2.5 transition-all cursor-pointer mb-4 rounded-full overflow-hidden"
-                  onClick={handleSeek}
-                >
-                  <div 
-                    className="h-full bg-white transition-all duration-75"
-                    style={{ width: `${progress}%` }}
-                  />
-                </div>
+              {/* Floating Screen */}
+              <div className="relative z-10 w-full h-full rounded-2xl overflow-hidden bg-black border border-white/15 shadow-2xl flex items-center justify-center">
+                <video
+                  ref={videoRef}
+                  src={project.videoUrl}
+                  playsInline
+                  autoPlay
+                  muted={isMuted}
+                  onTimeUpdate={handleTimeUpdate}
+                  onLoadedMetadata={handleLoadedMetadata}
+                  onClick={togglePlay}
+                  className="w-full h-full object-cover cursor-pointer"
+                />
 
-                <div className="flex flex-wrap justify-between items-center gap-4 text-xs font-mono text-zinc-300">
-                  {/* Left Controls: Play, Skip, Mute */}
-                  <div className="flex items-center gap-4">
-                    <button
-                      type="button"
-                      onClick={togglePlay}
-                      className="bg-white text-black px-4 py-1.5 font-bold uppercase tracking-wider hover:bg-zinc-200 transition-colors"
-                    >
-                      {isPlaying ? 'PAUSE' : 'PLAY'}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => skipSeconds(-5)}
-                      className="hover:text-white transition-colors"
-                    >
-                      -5s
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => skipSeconds(5)}
-                      className="hover:text-white transition-colors"
-                    >
-                      +5s
-                    </button>
-                    <button
-                      type="button"
-                      onClick={toggleMute}
-                      className="hover:text-white transition-colors flex items-center gap-1.5 ml-2"
-                    >
-                      {isMuted ? 'UNMUTE [AUDIO OFF]' : 'MUTE [AUDIO ON]'}
-                    </button>
+                {/* Minimalist Floating Controls on Hover */}
+                <div className={`absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-5 transition-opacity duration-300 z-20 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+                  {/* Progress Line */}
+                  <div 
+                    className="relative w-full h-1 bg-white/20 hover:h-2 transition-all cursor-pointer mb-3 rounded-full overflow-hidden"
+                    onClick={handleSeek}
+                  >
+                    <div 
+                      className="h-full bg-white transition-all duration-75"
+                      style={{ width: `${progress}%` }}
+                    />
                   </div>
 
-                  {/* Right Controls: Speed & Timecode */}
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-1 bg-white/5 border border-white/10 p-0.5">
-                      {[1, 1.5, 2].map((spd) => (
-                        <button
-                          key={spd}
-                          type="button"
-                          onClick={() => handleSpeedChange(spd)}
-                          className={`px-2 py-0.5 text-[10px] font-mono transition-colors ${
-                            playbackSpeed === spd ? 'bg-white text-black font-bold' : 'text-zinc-400 hover:text-white'
-                          }`}
-                        >
-                          {spd}x
-                        </button>
-                      ))}
+                  {/* Icon Only Controls */}
+                  <div className="flex justify-between items-center text-xs font-mono text-zinc-300">
+                    <div className="flex items-center gap-4">
+                      {/* Play/Pause Icon */}
+                      <button
+                        type="button"
+                        onClick={togglePlay}
+                        className="text-white hover:text-zinc-300 transition-colors"
+                        title={isPlaying ? 'Pause (Space)' : 'Play (Space)'}
+                      >
+                        {isPlaying ? (
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
+                          </svg>
+                        ) : (
+                          <svg className="w-4 h-4 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        )}
+                      </button>
+
+                      {/* Mute/Unmute Icon */}
+                      <button
+                        type="button"
+                        onClick={toggleMute}
+                        className="text-white hover:text-zinc-300 transition-colors"
+                        title={isMuted ? 'Unmute' : 'Mute'}
+                      >
+                        {isMuted ? (
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+                          </svg>
+                        ) : (
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                          </svg>
+                        )}
+                      </button>
+
+                      {/* Time Counter */}
+                      <span className="text-[11px] text-zinc-400 font-mono">
+                        {currentTime} <span className="text-zinc-600">/</span> {duration}
+                      </span>
                     </div>
 
-                    <div className="text-zinc-400">
-                      <span>{currentTime}</span>
-                      <span className="text-zinc-600"> / </span>
-                      <span>{duration}</span>
-                    </div>
+                    {/* Minimal Outbound Link (SVG Only) */}
+                    <a
+                      href={project.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title="Open Source"
+                      className="text-white hover:text-zinc-300 transition-colors flex items-center gap-1.5 text-xs font-mono tracking-wider"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </a>
                   </div>
                 </div>
               </div>
             </div>
           ) : (
-            <div className="relative w-full max-w-5xl h-full flex flex-col items-center justify-center">
-              <div className="relative w-full h-[70vh] bg-zinc-950 border border-white/15 p-2 flex items-center justify-center shadow-2xl">
+            <div className="relative w-full h-full flex flex-col items-center justify-center">
+              <div className="relative w-full h-full rounded-2xl overflow-hidden bg-black border border-white/15 shadow-2xl p-2 flex items-center justify-center">
                 <img
                   src={fynalTab === 0 ? project.media : project.extraMedia}
-                  alt={fynalTab === 0 ? "Fynal Platform Overview" : "Fynal Studio IDE"}
+                  alt={fynalTab === 0 ? "Fynal Overview" : "Fynal Studio IDE"}
                   className="w-full h-full object-contain"
                 />
-              </div>
 
-              {/* Tab Switcher in Lightbox */}
-              <div className="flex gap-2 bg-black/90 p-1 border border-white/15 mt-4">
-                <button
-                  type="button"
-                  onClick={() => setFynalTab(0)}
-                  className={`px-4 py-1.5 text-xs font-bold tracking-wider uppercase transition-colors ${
-                    fynalTab === 0 ? 'bg-white text-black' : 'text-zinc-400 hover:text-white'
-                  }`}
+                {/* Minimal Tab Switcher inside Image Lightbox */}
+                <div className="absolute bottom-4 left-4 z-20 flex gap-1 bg-black/80 backdrop-blur-md p-1 border border-white/15">
+                  <button
+                    type="button"
+                    onClick={() => setFynalTab(0)}
+                    className={`px-3 py-1 text-[10px] font-bold tracking-wider uppercase transition-colors ${
+                      fynalTab === 0 ? 'bg-white text-black' : 'text-zinc-400 hover:text-white'
+                    }`}
+                  >
+                    01
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setFynalTab(1)}
+                    className={`px-3 py-1 text-[10px] font-bold tracking-wider uppercase transition-colors ${
+                      fynalTab === 1 ? 'bg-white text-black' : 'text-zinc-400 hover:text-white'
+                    }`}
+                  >
+                    02
+                  </button>
+                </div>
+
+                {/* Minimal Outbound Link (SVG Only) */}
+                <a
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Visit Website"
+                  className="absolute bottom-4 right-4 z-20 w-8 h-8 rounded-full bg-black/80 hover:bg-white text-white hover:text-black transition-all border border-white/20 flex items-center justify-center shadow-lg"
                 >
-                  01 Platform Landing View
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setFynalTab(1)}
-                  className={`px-4 py-1.5 text-xs font-bold tracking-wider uppercase transition-colors ${
-                    fynalTab === 1 ? 'bg-white text-black' : 'text-zinc-400 hover:text-white'
-                  }`}
-                >
-                  02 Studio IDE & Code View
-                </button>
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
               </div>
             </div>
           )}
-        </div>
-
-        {/* Bottom Details Footer in Lightbox */}
-        <div 
-          className="pt-4 border-t border-white/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 z-20"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <div className="max-w-2xl">
-            <p className="text-xs font-medium text-white/50 mb-1">{project.subtitle}</p>
-            <p className="text-xs text-zinc-400 leading-relaxed">{project.desc}</p>
-          </div>
-
-          <a
-            href={project.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-white text-black px-6 py-2.5 text-xs font-bold tracking-widest uppercase hover:bg-zinc-200 transition-colors shrink-0"
-          >
-            <span>{project.type === 'image' ? 'Visit fynal.net' : 'View GitHub Repo'}</span>
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
-            </svg>
-          </a>
         </div>
       </motion.div>
     </AnimatePresence>
