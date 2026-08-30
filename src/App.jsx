@@ -32,9 +32,9 @@ function App() {
           <div className="flex items-center gap-8">
             <a
               href="mailto:acryagaurav@gmail.com"
-              className="bg-white text-zinc-900 border border-black/15 px-6 py-2.5 rounded-full text-sm font-bold tracking-wide shadow-sm hover:bg-black hover:text-white transition-all"
+              className="text-xs font-black tracking-[0.2em] uppercase text-zinc-900 hover:opacity-50 transition-opacity border-b-2 border-zinc-900 pb-0.5"
             >
-              Get In Touch
+              Get In Touch ↗
             </a>
           </div>
         </motion.nav>
@@ -47,9 +47,9 @@ function App() {
           className="absolute right-8 md:right-16 bottom-24 md:bottom-32 z-20 max-w-sm md:max-w-md"
         >
           <p className="text-base md:text-lg leading-relaxed font-medium mb-4 text-zinc-900">
-            Users leave. I design the reasons they stay. Anyone can generate the screens now. I design the decisions behind them, and ship the thing running.
+            Anyone can prompt a UI in 30 seconds. I'm the one who writes the code, breaks the hardware, and makes sure it actually runs.
           </p>
-          <p className="text-sm font-bold tracking-wide text-zinc-800">— Gaurav Acharya</p>
+          <p className="text-sm font-bold tracking-wide text-zinc-700">— Gaurav Acharya</p>
         </motion.div>
 
         {/* Social Links -- right edge vertical stack */}
