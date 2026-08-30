@@ -157,17 +157,17 @@ function App() {
           </motion.div>
         )}
 
-        {/* 8-Bit Pixel Sunglasses (Z-25) -- Reveals via the exact same Cursor Radial Torch */}
+        {/* 8-Bit Pixel Sunglasses (Z-25) -- High-Intensity Cursor Torch Reveal */}
         {(isPortraitHovered || isGlassesLocked) && (
           <div
             className="absolute inset-0 z-25 pointer-events-none select-none overflow-hidden"
             style={{
               WebkitMaskImage: isGlassesLocked
                 ? 'none'
-                : `radial-gradient(circle 220px at ${mousePos.x}px ${mousePos.y}px, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 45%, rgba(0,0,0,0) 80%)`,
+                : `radial-gradient(circle 360px at ${mousePos.x}px ${mousePos.y}px, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 65%, rgba(0,0,0,0.6) 85%, rgba(0,0,0,0) 100%)`,
               maskImage: isGlassesLocked
                 ? 'none'
-                : `radial-gradient(circle 220px at ${mousePos.x}px ${mousePos.y}px, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 45%, rgba(0,0,0,0) 80%)`
+                : `radial-gradient(circle 360px at ${mousePos.x}px ${mousePos.y}px, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 65%, rgba(0,0,0,0.6) 85%, rgba(0,0,0,0) 100%)`
             }}
           >
             <div
