@@ -32,9 +32,9 @@ function App() {
           <div className="flex items-center gap-8">
             <a
               href="mailto:acryagaurav@gmail.com"
-              className="text-xs font-black tracking-[0.2em] uppercase text-zinc-900 hover:opacity-50 transition-opacity border-b-2 border-zinc-900 pb-0.5"
+              className="text-sm font-medium text-zinc-900 hover:text-zinc-600 transition-colors"
             >
-              Get In Touch ↗
+              Get In Touch
             </a>
           </div>
         </motion.nav>
@@ -157,7 +157,9 @@ function App() {
                 </div>
                 <div className="flex items-center gap-6 mt-4 md:mt-0">
                   <span className="text-[10px] font-bold tracking-[0.15em] text-white/30 border border-white/10 px-3 py-1">{project.tag}</span>
-                  <span className="text-sm font-bold text-white/50 group-hover:text-white transition-colors">&#8599;</span>
+                  <svg className="w-4 h-4 text-white/40 group-hover:text-white transition-colors" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
+                  </svg>
                 </div>
               </motion.a>
             ))}
