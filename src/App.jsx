@@ -101,12 +101,8 @@ function App() {
           </span>
         </motion.div>
 
-        {/* Portrait Cutout (Z-10) -- Sits directly in front of the text and softly reveals background on hover */}
-        <div 
-          className="absolute inset-0 z-10 cursor-pointer flex items-center justify-center"
-          onMouseEnter={() => setIsPortraitHovered(true)}
-          onMouseLeave={() => setIsPortraitHovered(false)}
-        >
+        {/* Portrait Cutout (Z-10) -- Sits directly in front of the text */}
+        <div className="absolute inset-0 z-10 pointer-events-none flex items-center justify-center">
           <img
             src={heroCutout}
             alt="Gaurav Acharya"
@@ -116,6 +112,13 @@ function App() {
             style={{ objectPosition: '50% 15%' }}
           />
         </div>
+
+        {/* Dedicated Face & Torso Hover Target (Z-20) */}
+        <div 
+          className="absolute inset-x-0 top-0 mx-auto w-[85vw] sm:w-[50vw] md:w-[38vw] lg:w-[28vw] max-w-md h-[78vh] z-20 cursor-pointer pointer-events-auto"
+          onMouseEnter={() => setIsPortraitHovered(true)}
+          onMouseLeave={() => setIsPortraitHovered(false)}
+        />
 
         {/* Smooth bottom blend overlay (Z-15) */}
         <div className="absolute bottom-0 inset-x-0 h-48 bg-gradient-to-t from-[#09090B] via-[#09090B]/70 to-transparent z-15 pointer-events-none"></div>
