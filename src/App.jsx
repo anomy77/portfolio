@@ -7,37 +7,34 @@ function App() {
     <div className="bg-black text-white font-sans min-h-screen selection:bg-white selection:text-black">
 
       {/* ===== HERO: Full-Bleed Portrait ===== */}
-      <section className="relative h-screen w-full overflow-hidden">
+      <section className="relative h-screen w-full overflow-hidden bg-[#e5e5e5]">
 
-        {/* Portrait Image -- fills entire viewport with multi-stop seamless fade */}
+        {/* Portrait Image -- fills entire viewport */}
         <div className="absolute inset-0 z-0">
           <img
             src={heroImage}
             alt="Gaurav Acharya"
-            className="w-full h-full object-cover object-top grayscale"
+            className="w-full h-full object-cover object-center grayscale contrast-110"
             style={{ objectPosition: '50% 15%' }}
           />
-          {/* Subtle dark vignette on top and sides for text contrast */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/20 pointer-events-none"></div>
-          {/* Deep multi-stop bottom fade that seamlessly melts the portrait into pure black */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent via-45% to-black pointer-events-none"></div>
-          <div className="absolute inset-x-0 bottom-0 h-96 bg-gradient-to-t from-black via-black/90 to-transparent pointer-events-none"></div>
+          {/* Smooth bottom gradient fade starting below shoulders into solid black */}
+          <div className="absolute inset-x-0 bottom-0 h-48 md:h-72 bg-gradient-to-t from-black via-black/80 via-50% to-transparent pointer-events-none z-10"></div>
         </div>
 
         {/* Navigation */}
         <motion.nav
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
           className="relative z-20 flex justify-between items-center px-8 md:px-12 py-6"
         >
-          <span className="text-2xl font-black tracking-tight text-white">
+          <span className="text-2xl font-black tracking-tight text-zinc-900">
             gaurav.
           </span>
           <div className="flex items-center gap-8">
             <a
               href="mailto:acryagaurav@gmail.com"
-              className="bg-white text-black px-6 py-2.5 rounded-full text-sm font-bold tracking-wide hover:bg-gray-200 transition-colors"
+              className="bg-white/90 backdrop-blur-md text-zinc-900 border border-black/10 px-6 py-2.5 rounded-full text-sm font-bold tracking-wide shadow-sm hover:bg-black hover:text-white transition-all"
             >
               Get In Touch
             </a>
@@ -48,26 +45,26 @@ function App() {
         <motion.div
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute right-8 md:right-16 bottom-32 md:bottom-40 z-10 bg-white text-black p-8 md:p-10 max-w-sm md:max-w-md shadow-2xl"
+          transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute right-8 md:right-16 bottom-28 md:bottom-36 z-20 bg-white text-black p-8 md:p-10 max-w-sm md:max-w-md shadow-2xl border border-black/5"
         >
-          <p className="text-base md:text-lg leading-relaxed font-medium mb-6">
+          <p className="text-base md:text-lg leading-relaxed font-medium mb-6 text-zinc-800">
             Users leave. I design the reasons they stay. Anyone can generate the screens now. I design the decisions behind them, and ship the thing running.
           </p>
-          <p className="text-sm font-bold tracking-wide">— Gaurav Acharya</p>
+          <p className="text-sm font-bold tracking-wide text-zinc-900">— Gaurav Acharya</p>
         </motion.div>
 
         {/* Social Links -- right edge vertical stack */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1 }}
-          className="absolute right-8 md:right-16 top-1/2 -translate-y-1/2 z-10 flex flex-col gap-5"
+          transition={{ duration: 1, delay: 0.8 }}
+          className="absolute right-8 md:right-16 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-5"
         >
-          <a href="https://github.com/anomy77" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center hover:bg-white/30 transition-colors">
+          <a href="https://github.com/anomy77" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/80 backdrop-blur-md border border-black/10 text-zinc-700 flex items-center justify-center hover:bg-black hover:text-white transition-all shadow-sm">
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
           </a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center hover:bg-white/30 transition-colors">
+          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/80 backdrop-blur-md border border-black/10 text-zinc-700 flex items-center justify-center hover:bg-black hover:text-white transition-all shadow-sm">
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
           </a>
         </motion.div>
@@ -79,8 +76,8 @@ function App() {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="absolute bottom-8 left-8 md:left-12 z-20"
         >
-          <p className="text-xs font-bold tracking-[0.3em] uppercase text-white/60 mb-1">Systems & Browser Engineer</p>
-          <p className="text-xs tracking-widest uppercase text-white/40">Kathmandu, Nepal</p>
+          <p className="text-xs font-bold tracking-[0.3em] uppercase text-zinc-300 mb-1 drop-shadow-sm">Systems & Browser Engineer</p>
+          <p className="text-xs tracking-widest uppercase text-zinc-400 drop-shadow-sm">Kathmandu, Nepal</p>
         </motion.div>
       </section>
 
