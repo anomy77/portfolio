@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import heroCutout from '/hero-cutout.png?url';
 
 const baseUrl = import.meta.env.BASE_URL || '/';
 
@@ -66,9 +67,28 @@ export function Orbiting3DScene({ mousePos = { x: 0, y: 0 } }) {
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
     camera.position.set(0, 1.2, 11.5);
 
-    // High-Performance Unified Renderer
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    // High-Performance Unified Renderer with Depth Buffer
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, depth: true });
     
+    // Invisible GPU Depth Occluder Mesh (writes exact head silhouette to depth buffer)
+    let occluderMesh = null;
+    const textureLoader = new THREE.TextureLoader();
+    textureLoader.load(heroCutout, (texture) => {
+      texture.colorSpace = THREE.SRGBColorSpace;
+      const occluderMat = new THREE.MeshBasicMaterial({
+        map: texture,
+        transparent: true,
+        alphaTest: 0.2, // Discard transparent pixels; write opaque head pixels to Z-buffer
+        depthWrite: true,
+        colorWrite: false, // Invisible to eye, visible to depth test!
+        side: THREE.DoubleSide
+      });
+      occluderMesh = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), occluderMat);
+      occluderMesh.renderOrder = -1; // Write to depth buffer before 3D models render
+      scene.add(occluderMesh);
+      updateSize();
+    });
+
     const updateSize = () => {
       const parent = canvas.parentElement;
       const width = parent?.clientWidth || window.innerWidth;
@@ -79,6 +99,29 @@ export function Orbiting3DScene({ mousePos = { x: 0, y: 0 } }) {
       
       renderer.setSize(width, height);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      if (occluderMesh) {
+        const fovRad = (camera.fov * Math.PI) / 180;
+        const visibleHeight = 2 * Math.tan(fovRad / 2) * camera.position.z;
+        const visibleWidth = visibleHeight * camera.aspect;
+        const imgAspect = 16 / 9;
+        const screenAspect = camera.aspect;
+
+        let planeW, planeH, planeY;
+        if (screenAspect > imgAspect) {
+          planeW = visibleWidth;
+          planeH = visibleWidth / imgAspect;
+          planeY = camera.position.y + (visibleHeight - planeH) * (0.5 - 0.15);
+        } else {
+          planeH = visibleHeight;
+          planeW = visibleHeight * imgAspect;
+          planeY = camera.position.y;
+        }
+
+        occluderMesh.geometry.dispose();
+        occluderMesh.geometry = new THREE.PlaneGeometry(planeW, planeH);
+        occluderMesh.position.set(0, planeY, 0);
+      }
     };
     updateSize();
 
@@ -144,12 +187,12 @@ export function Orbiting3DScene({ mousePos = { x: 0, y: 0 } }) {
       );
     });
 
-    // Elevated Halo Orbit Parameters (Floating above head like an angel ring)
+    // Elevated Halo Orbit Parameters (Floating around head crown like an angel ring)
     const orbitCenterX = 0.0;
-    const orbitCenterY = 2.95; // Elevated high above head crown
-    const orbitRadiusX = 3.85; // Wider halo circumference
-    const orbitRadiusZ = 2.75; // Wider halo depth
-    const pitchAngle = 0.34;   // Gracefully tilted forward
+    const orbitCenterY = 2.1;  // Head crown height
+    const orbitRadiusX = 3.6;  // Wider halo circumference
+    const orbitRadiusZ = 2.8;  // Halo depth
+    const pitchAngle = 0.32;   // Tilted forward so front dips over brow, back loops behind crown
     const rollAngle = -0.08;   // Subtle angle
     const speed = 0.00048;
 
@@ -167,7 +210,7 @@ export function Orbiting3DScene({ mousePos = { x: 0, y: 0 } }) {
       const targetCamY = -(currentMouse.y / (window.innerHeight || 1) - 0.5) * 0.3 + 1.2;
       camera.position.x += (targetCamX - camera.position.x) * 0.05;
       camera.position.y += (targetCamY - camera.position.y) * 0.05;
-      camera.lookAt(0, 2.2, 0);
+      camera.lookAt(0, 1.2, 0);
 
       objectGroups.forEach((item) => {
         const theta = baseAngle + item.angleOffset;
