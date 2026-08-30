@@ -15,6 +15,7 @@ import thumbMarkclip from '/images/demo-2-thumb.jpg?url';
 import { ProjectMedia } from './components/ProjectMedia';
 import { MediaLightbox } from './components/MediaLightbox';
 import { Orbiting3DScene } from './components/Orbiting3DScene';
+import { SystemsManifesto } from './components/SystemsManifesto';
 
 function App() {
   const heroRef = useRef(null);
@@ -118,15 +119,68 @@ function App() {
           className="absolute inset-0 z-5 flex items-center justify-center select-none pointer-events-none overflow-hidden"
         >
           <span 
-            className="text-[26vw] font-black tracking-[-0.06em] leading-none uppercase whitespace-nowrap select-none font-sans text-[#E4E4E7]"
+            className="text-[25vw] font-bold tracking-[-0.04em] leading-none uppercase whitespace-nowrap select-none text-[#E4E4E7]"
             style={{
+              fontFamily: "'Playfair Display', 'Newsreader', serif",
               WebkitTextStroke: '2px rgba(212, 212, 216, 0.9)',
-              letterSpacing: '-0.06em'
+              letterSpacing: '-0.04em'
             }}
           >
             SOLVE IT
           </span>
         </motion.div>
+
+        {/* Constant #FFFFFF Perimeter Fade (Z-9) -- Gradual atmospheric aura radiating around portrait perimeter */}
+        <div className="absolute inset-0 z-9 pointer-events-none flex items-center justify-center overflow-hidden">
+          {/* Layer 1: Tight perimeter halo */}
+          <img
+            src={heroCutout}
+            alt=""
+            aria-hidden="true"
+            className="w-full h-full object-cover object-center absolute inset-0"
+            style={{
+              objectPosition: '50% 15%',
+              filter: 'brightness(0) invert(1) blur(10px)',
+              opacity: 0.95
+            }}
+          />
+          {/* Layer 2: Medium radius expansion */}
+          <img
+            src={heroCutout}
+            alt=""
+            aria-hidden="true"
+            className="w-full h-full object-cover object-center absolute inset-0"
+            style={{
+              objectPosition: '50% 15%',
+              filter: 'brightness(0) invert(1) blur(28px)',
+              opacity: 0.8
+            }}
+          />
+          {/* Layer 3: Wide ambient fade */}
+          <img
+            src={heroCutout}
+            alt=""
+            aria-hidden="true"
+            className="w-full h-full object-cover object-center absolute inset-0"
+            style={{
+              objectPosition: '50% 15%',
+              filter: 'brightness(0) invert(1) blur(60px)',
+              opacity: 0.55
+            }}
+          />
+          {/* Layer 4: Deep atmospheric falloff */}
+          <img
+            src={heroCutout}
+            alt=""
+            aria-hidden="true"
+            className="w-full h-full object-cover object-center absolute inset-0"
+            style={{
+              objectPosition: '50% 15%',
+              filter: 'brightness(0) invert(1) blur(110px)',
+              opacity: 0.35
+            }}
+          />
+        </div>
 
         {/* Portrait Cutout (Z-10) -- 100% Solid & Sharp (Zero Milky Fog) */}
         <div className="absolute inset-0 z-10 pointer-events-none flex items-center justify-center">
@@ -149,10 +203,11 @@ function App() {
             className="absolute inset-0 z-12 flex items-center justify-center select-none pointer-events-none overflow-hidden"
           >
             <span 
-              className="text-[26vw] font-black tracking-[-0.06em] leading-none uppercase whitespace-nowrap select-none font-sans text-transparent"
+              className="text-[25vw] font-bold tracking-[-0.04em] leading-none uppercase whitespace-nowrap select-none text-transparent"
               style={{
+                fontFamily: "'Playfair Display', 'Newsreader', serif",
                 WebkitTextStroke: '1.5px #FFFFFF',
-                letterSpacing: '-0.06em',
+                letterSpacing: '-0.04em',
                 filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.85)) drop-shadow(0 0 1px rgba(0,0,0,0.9))'
               }}
             >
@@ -257,89 +312,8 @@ function App() {
         </motion.div>
       </section>
 
-      {/* ===== SECTION 2: Technical Manifesto & Schematic Tabular Architecture ===== */}
-      <section className="relative bg-[#09090B] text-[#E4E4E7] pt-20 pb-28 md:pt-28 md:pb-36 px-8 md:px-16">
-        <div className="max-w-6xl mx-auto">
-          
-          {/* Section Terminal Tag */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="flex items-center gap-3 font-mono text-[11px] text-[#A1A1AA] tracking-[0.25em] uppercase mb-8"
-          >
-            <span className="text-[#71717A]">01 //</span>
-            <span>SYSTEMS SPECIFICATION & ARCHITECTURE</span>
-          </motion.div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
-            
-            {/* Left Column: Tight Engineered Headline & Body Block */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-              className="lg:col-span-6 flex flex-col"
-            >
-              <h2 className="text-3xl md:text-5xl lg:text-[52px] font-extrabold tracking-[-0.04em] leading-[1.02] text-[#E4E4E7] mb-8">
-                I write software from first principles. Fast engines, browser internals, and zero unnecessary dependencies.
-              </h2>
-
-              <div className="space-y-4 text-[#A1A1AA] text-base md:text-lg leading-relaxed font-normal">
-                <p>
-                  Most modern web software is bloated with vendor dependencies, heavy SaaS wrappers, and recurring API tolls.
-                </p>
-                <p>
-                  I focus on direct execution: in-memory stream interception, background worker concurrency, and lightweight local-first architecture that runs with sub-millisecond execution.
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Right Column: Brutalist Tabular List with Hard 1px Linear Dividers (Zero Cards) */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-              className="lg:col-span-6 flex flex-col border-t border-[#27272A]"
-            >
-              {[
-                {
-                  index: '01',
-                  category: 'BROWSER INTERNALS & MV3',
-                  detail: 'Reverse-engineering virtualized DOM state and running parallel worker concurrency directly inside browser runtime memory without getting throttled or detected.'
-                },
-                {
-                  index: '02',
-                  category: 'DIRECT STREAM INTERCEPTION',
-                  detail: 'Eliminating heavy cloud transcription middleware by intercepting live caption and audio binary buffers straight from client memory into Gemini 2.0 Flash.'
-                },
-                {
-                  index: '03',
-                  category: 'FULL-STACK LABS & DEPLOYMENT',
-                  detail: 'Founder of Fynal Technologies (fynal.net). Architecting high-performance digital platforms, zero-overhead tooling, and custom infrastructure stacks.'
-                }
-              ].map((item) => (
-                <div
-                  key={item.index}
-                  className="py-7 border-b border-[#27272A] flex flex-col gap-2.5 transition-colors group"
-                >
-                  <div className="flex items-center gap-3 font-mono text-[11px] tracking-[0.2em] text-[#A1A1AA] uppercase">
-                    <span className="text-[#71717A] font-semibold">{item.index}</span>
-                    <span className="text-[#3F3F46]">•</span>
-                    <span className="text-[#D4D4D8] font-medium tracking-[0.2em]">{item.category}</span>
-                  </div>
-                  <p className="text-[#A1A1AA] text-sm md:text-[15px] leading-relaxed pl-7">
-                    {item.detail}
-                  </p>
-                </div>
-              ))}
-            </motion.div>
-          </div>
-        </div>
-      </section>
+      {/* ===== SECTION 2: Systems Manifesto & Interactive Tactile Architecture ===== */}
+      <SystemsManifesto />
 
       {/* ===== SECTION 3: Flagship Platform Spotlight (Fynal.net) ===== */}
       <section id="flagship" className="relative bg-[#09090B] text-[#E4E4E7] py-24 md:py-32 px-8 md:px-16 border-t border-[#27272A]/50">
