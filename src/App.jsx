@@ -6,10 +6,17 @@ import fynal2 from '/images/fynal-2.png?url';
 import demoMapleads from '/videos/demo-3.mp4?url';
 import demoTubebrief from '/videos/demo-1.mp4?url';
 import demoMarkclip from '/videos/demo-2.mp4?url';
+import thumbMapleads from '/images/demo-3-thumb.jpg?url';
+import thumbTubebrief from '/images/demo-1-thumb.jpg?url';
+import thumbMarkclip from '/images/demo-2-thumb.jpg?url';
+
+import { ProjectMedia } from './components/ProjectMedia';
+import { MediaLightbox } from './components/MediaLightbox';
 
 function App() {
   const [activeTab, setActiveTab] = useState('all');
   const [fynalTab, setFynalTab] = useState(0);
+  const [selectedLightboxProject, setSelectedLightboxProject] = useState(null);
 
   const projects = [
     {
@@ -33,6 +40,7 @@ function App() {
       url: 'https://github.com/anomy77/mapleads-lead-extractor',
       type: 'video',
       videoUrl: demoMapleads,
+      poster: thumbMapleads,
       metrics: ['8x Parallel Workers', '47%+ Email Yield', 'Zero API Fees']
     },
     {
@@ -44,6 +52,7 @@ function App() {
       url: 'https://github.com/anomy77/tubebrief-ai',
       type: 'video',
       videoUrl: demoTubebrief,
+      poster: thumbTubebrief,
       metrics: ['<2s Latency', 'Gemini 2.0 Flash', 'Zero Server Costs']
     },
     {
@@ -55,6 +64,7 @@ function App() {
       url: 'https://github.com/anomy77/markclip-extension',
       type: 'video',
       videoUrl: demoMarkclip,
+      poster: thumbMarkclip,
       metrics: ['<8 KB Bundle', 'Obsidian Ready', 'Zero Dependencies']
     }
   ];
@@ -201,51 +211,14 @@ function App() {
                 transition={{ duration: 0.9, delay: 0.1 * i }}
                 className="group border border-white/10 bg-[#070709] rounded-none overflow-hidden transition-colors hover:border-white/25"
               >
-                {/* Media Container: Video or Images */}
+                {/* Media Container: Custom Video Player or Image Showcase */}
                 <div className="relative w-full aspect-video bg-zinc-950 overflow-hidden border-b border-white/10">
-                  {project.type === 'video' ? (
-                    <video
-                      src={project.videoUrl}
-                      controls
-                      playsInline
-                      muted
-                      autoPlay
-                      loop
-                      className="w-full h-full object-cover object-center"
-                    />
-                  ) : (
-                    <div className="relative w-full h-full bg-zinc-950 flex flex-col justify-center items-center overflow-hidden">
-                      <img
-                        src={fynalTab === 0 ? project.media : project.extraMedia}
-                        alt={fynalTab === 0 ? "Fynal Platform Overview" : "Fynal Studio IDE"}
-                        className="w-full h-full object-contain object-center transition-all duration-300"
-                      />
-                      {/* Interactive View Switcher Tabs */}
-                      <div className="absolute bottom-4 left-4 z-20 flex gap-1 bg-black/80 backdrop-blur-md p-1 border border-white/10">
-                        <button
-                          type="button"
-                          onClick={() => setFynalTab(0)}
-                          className={`px-3 py-1 text-[10px] font-bold tracking-wider uppercase transition-colors ${
-                            fynalTab === 0 ? 'bg-white text-black' : 'text-zinc-400 hover:text-white'
-                          }`}
-                        >
-                          01 Platform Overview
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setFynalTab(1)}
-                          className={`px-3 py-1 text-[10px] font-bold tracking-wider uppercase transition-colors ${
-                            fynalTab === 1 ? 'bg-white text-black' : 'text-zinc-400 hover:text-white'
-                          }`}
-                        >
-                          02 Studio IDE & Code
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                  <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-md px-3 py-1 text-[10px] font-bold tracking-[0.2em] text-white/70 border border-white/10 uppercase">
-                    {project.tag}
-                  </div>
+                  <ProjectMedia
+                    project={project}
+                    fynalTab={fynalTab}
+                    setFynalTab={setFynalTab}
+                    onOpenLightbox={(proj) => setSelectedLightboxProject(proj)}
+                  />
                 </div>
 
                 {/* Project Details */}
@@ -259,17 +232,30 @@ function App() {
                       <p className="text-base text-zinc-400 max-w-2xl leading-relaxed">{project.desc}</p>
                     </div>
 
-                    <a
-                      href={project.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 self-start bg-white text-black px-6 py-3 text-xs font-bold tracking-widest uppercase hover:bg-zinc-200 transition-colors shrink-0"
-                    >
-                      <span>{project.type === 'image' ? 'Visit fynal.net' : 'View Source Code'}</span>
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
-                      </svg>
-                    </a>
+                    <div className="flex items-center gap-3 shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => setSelectedLightboxProject(project)}
+                        className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 px-4 py-3 text-xs font-bold tracking-widest uppercase transition-colors"
+                      >
+                        <span>Demo</span>
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7" />
+                        </svg>
+                      </button>
+
+                      <a
+                        href={project.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 bg-white text-black px-6 py-3 text-xs font-bold tracking-widest uppercase hover:bg-zinc-200 transition-colors"
+                      >
+                        <span>{project.type === 'image' ? 'Visit fynal.net' : 'Source Code'}</span>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
+                        </svg>
+                      </a>
+                    </div>
                   </div>
 
                   {/* Metrics Pills */}
@@ -304,6 +290,16 @@ function App() {
           </div>
         </div>
       </footer>
+
+      {/* Interactive Lightbox Modal */}
+      {selectedLightboxProject && (
+        <MediaLightbox
+          project={selectedLightboxProject}
+          onClose={() => setSelectedLightboxProject(null)}
+          fynalTab={fynalTab}
+          setFynalTab={setFynalTab}
+        />
+      )}
     </div>
   );
 }
