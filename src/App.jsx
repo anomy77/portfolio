@@ -91,6 +91,9 @@ function App() {
       {/* ===== SECTION 1: Full-Bleed Portrait Hero with True Z-Axis Depth ===== */}
       <section 
         ref={heroRef}
+        onMouseEnter={() => setIsPortraitHovered(true)}
+        onMouseLeave={() => setIsPortraitHovered(false)}
+        onMouseMove={handleHeroMouseMove}
         className="relative h-screen w-full overflow-hidden bg-white [mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)] flex items-center justify-center"
       >
 
@@ -119,22 +122,14 @@ function App() {
             style={{
               objectPosition: '50% 15%',
               WebkitMaskImage: isPortraitHovered
-                ? `radial-gradient(circle 240px at ${mousePos.x}px ${mousePos.y}px, rgba(0,0,0,0.40) 0%, rgba(0,0,0,0.72) 45%, rgba(0,0,0,1) 85%)`
+                ? `radial-gradient(circle 260px at ${mousePos.x}px ${mousePos.y}px, rgba(0,0,0,0.40) 0%, rgba(0,0,0,0.72) 50%, rgba(0,0,0,1) 85%)`
                 : 'none',
               maskImage: isPortraitHovered
-                ? `radial-gradient(circle 240px at ${mousePos.x}px ${mousePos.y}px, rgba(0,0,0,0.40) 0%, rgba(0,0,0,0.72) 45%, rgba(0,0,0,1) 85%)`
+                ? `radial-gradient(circle 260px at ${mousePos.x}px ${mousePos.y}px, rgba(0,0,0,0.40) 0%, rgba(0,0,0,0.72) 50%, rgba(0,0,0,1) 85%)`
                 : 'none'
             }}
           />
         </div>
-
-        {/* Dedicated Face & Torso Hover Target (Z-20) */}
-        <div 
-          className="absolute inset-x-0 top-0 mx-auto w-[85vw] sm:w-[50vw] md:w-[38vw] lg:w-[28vw] max-w-md h-[78vh] z-20 cursor-pointer pointer-events-auto"
-          onMouseEnter={() => setIsPortraitHovered(true)}
-          onMouseLeave={() => setIsPortraitHovered(false)}
-          onMouseMove={handleHeroMouseMove}
-        />
 
         {/* Smooth bottom blend overlay (Z-15) */}
         <div className="absolute bottom-0 inset-x-0 h-48 bg-gradient-to-t from-[#09090B] via-[#09090B]/70 to-transparent z-15 pointer-events-none"></div>
