@@ -39,6 +39,13 @@ const MODELS = [
     url: `${baseUrl}models/plant.glb`,
     targetScale: 1.1,
     rotationSpeed: { x: 0.003, y: 0.01, z: 0.002 }
+  },
+  {
+    id: 'sunglasses',
+    name: 'PIXEL SHADES',
+    url: `${baseUrl}models/sunglasses.glb`,
+    targetScale: 1.1,
+    rotationSpeed: { x: 0.01, y: 0.015, z: 0.008 }
   }
 ];
 
