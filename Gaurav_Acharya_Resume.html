@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gaurav Acharya - Resume</title>
+  <style>
+    @page { size: A4; margin: 12mm 15mm; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #222; font-size: 9.5pt; line-height: 1.35; background: #fff; }
+    .header { text-align: center; border-bottom: 1.5pt solid #222; padding-bottom: 6px; margin-bottom: 10px; }
+    .name { font-size: 18pt; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: #111; margin-bottom: 3px; }
+    .contact-line { font-size: 9pt; color: #444; }
+    .contact-line a { color: #111; text-decoration: none; font-weight: 600; }
+    .section-title { font-size: 10.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1pt solid #aaa; padding-bottom: 2px; margin-top: 10px; margin-bottom: 6px; color: #111; }
+    .item { margin-bottom: 7px; }
+    .item-header { display: flex; justify-content: space-between; font-weight: 700; font-size: 9.5pt; color: #111; }
+    .item-sub { font-style: italic; color: #444; font-size: 9pt; margin-bottom: 2px; }
+    ul { margin-left: 14px; margin-top: 2px; }
+    li { margin-bottom: 2px; }
+    .skills-grid { display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; font-size: 9pt; }
+    .skills-category { font-weight: 700; color: #111; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="name">Gaurav Acharya</div>
+    <div class="contact-line">
+      Kathmandu, Nepal &bull; <a href="https://github.com/anomy77">github.com/anomy77</a> &bull; Full Stack &amp; Browser Systems Developer
+    </div>
+  </div>
+
+  <div class="section-title">Technical Skills</div>
+  <div class="skills-grid">
+    <div class="skills-category">Browser Extensions:</div>
+    <div>Chrome Manifest V3, Background Service Workers, Content Script DOM Injection, chrome.storage, Storage Architecture</div>
+    <div class="skills-category">Web Scraping &amp; Data:</div>
+    <div>Infinite Scroll DOM Automation, High-Throughput Parallel Worker Pools, Regex/Mailto Enrichment, UTF-8 BOM CSV/Excel Pipelines</div>
+    <div class="skills-category">Languages &amp; Core:</div>
+    <div>Python 3.x, JavaScript (ES6+), TypeScript, PHP, SQL, HTML5, Modern CSS3</div>
+    <div class="skills-category">AI &amp; Real-Time Systems:</div>
+    <div>Google Gemini 2.0 Flash REST API, Claude/OpenAI SDKs, Deepgram Nova-3 WebSockets, PyAudio Ring Buffers</div>
+  </div>
+
+  <div class="section-title">Featured Projects</div>
+  <div class="item">
+    <div class="item-header">
+      <span>MapLeads &ndash; Google Maps B2B Lead Extractor &amp; Parallel Email Finder</span>
+      <span>github.com/anomy77/mapleads-lead-extractor</span>
+    </div>
+    <div class="item-sub">Manifest V3, DOM Automation, Asynchronous Parallel Worker Pool, Local Storage</div>
+    <ul>
+      <li>Built production Chrome extension executing deep infinite scrolling with smart end-of-list detection.</li>
+      <li>Implemented an 8-worker concurrent background email scraping engine scanning company domains via regex &amp; mailto.</li>
+      <li>Integrated cross-tab persistent local storage and automated 1-click UTF-8 BOM CSV spreadsheet export.</li>
+    </ul>
+  </div>
+
+  <div class="item">
+    <div class="item-header">
+      <span>TubeBrief AI &ndash; YouTube AI Brief &amp; Notes Generator</span>
+      <span>github.com/anomy77/tubebrief-ai</span>
+    </div>
+    <div class="item-sub">JavaScript, Manifest V3, Google Gemini 2.0 Flash REST API, Markdown Rendering</div>
+    <ul>
+      <li>Engineered an in-memory timedtext subtitle extractor directly capturing YouTube captions without paid third-party APIs.</li>
+      <li>Integrated Google Gemini 2.0 Flash to synthesize transcripts into structured executive summaries and study notes under 2 seconds.</li>
+    </ul>
+  </div>
+
+  <div class="item">
+    <div class="item-header">
+      <span>MarkClip &ndash; Web to Markdown Clipper</span>
+      <span>github.com/anomy77/markclip-extension</span>
+    </div>
+    <div class="item-sub">JavaScript, DOM Parser, Local Storage, Markdown Engine</div>
+    <ul>
+      <li>Developed lightweight browser extension that strips web bloat and converts articles into clean Markdown with YAML front matter.</li>
+      <li>Engineered 1-click clipboard copying and local .md file export tailored for Obsidian and Notion knowledge bases.</li>
+    </ul>
+  </div>
+
+  <div class="section-title">Education</div>
+  <div class="item">
+    <div class="item-header">
+      <span>Secondary Education (Science &bull; Computer Science &amp; Mathematics)</span>
+      <span>Kathmandu, Nepal</span>
+    </div>
+    <div class="item-sub">Grade 12 &bull; Expected Completion: 2026</div>
+  </div>
+</body>
+</html>
