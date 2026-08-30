@@ -113,23 +113,38 @@ function App() {
           </span>
         </motion.div>
 
-        {/* Portrait Cutout (Z-10) -- Radial Torch Reveal Centered on Cursor */}
+        {/* Portrait Cutout (Z-10) -- 100% Solid & Sharp (Zero Milky Fog) */}
         <div className="absolute inset-0 z-10 pointer-events-none flex items-center justify-center">
           <img
             src={heroCutout}
             alt="Gaurav Acharya"
             className="w-full h-full object-cover object-center grayscale contrast-105"
-            style={{
-              objectPosition: '50% 15%',
-              WebkitMaskImage: isPortraitHovered
-                ? `radial-gradient(circle 260px at ${mousePos.x}px ${mousePos.y}px, rgba(0,0,0,0.40) 0%, rgba(0,0,0,0.72) 50%, rgba(0,0,0,1) 85%)`
-                : 'none',
-              maskImage: isPortraitHovered
-                ? `radial-gradient(circle 260px at ${mousePos.x}px ${mousePos.y}px, rgba(0,0,0,0.40) 0%, rgba(0,0,0,0.72) 50%, rgba(0,0,0,1) 85%)`
-                : 'none'
-            }}
+            style={{ objectPosition: '50% 15%' }}
           />
         </div>
+
+        {/* Foreground Laser Stencil Torch (Z-12) -- Projected cleanly over hair/face without fading photo */}
+        {isPortraitHovered && (
+          <motion.div
+            style={{ 
+              y: backgroundY,
+              WebkitMaskImage: `radial-gradient(circle 220px at ${mousePos.x}px ${mousePos.y}px, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 45%, rgba(0,0,0,0) 80%)`,
+              maskImage: `radial-gradient(circle 220px at ${mousePos.x}px ${mousePos.y}px, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 45%, rgba(0,0,0,0) 80%)`
+            }}
+            className="absolute inset-0 z-12 flex items-center justify-center select-none pointer-events-none overflow-hidden"
+          >
+            <span 
+              className="text-[26vw] font-black tracking-[-0.06em] leading-none uppercase whitespace-nowrap select-none font-sans text-transparent"
+              style={{
+                WebkitTextStroke: '1.5px #FFFFFF',
+                letterSpacing: '-0.06em',
+                filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.85)) drop-shadow(0 0 1px rgba(0,0,0,0.9))'
+              }}
+            >
+              SOLVE IT
+            </span>
+          </motion.div>
+        )}
 
         {/* Smooth bottom blend overlay (Z-15) */}
         <div className="absolute bottom-0 inset-x-0 h-48 bg-gradient-to-t from-[#09090B] via-[#09090B]/70 to-transparent z-15 pointer-events-none"></div>
