@@ -76,26 +76,10 @@ function App() {
     <div className="bg-[#09090B] text-[#E4E4E7] font-sans min-h-screen selection:bg-white selection:text-black">
 
       {/* ===== SECTION 1: Full-Bleed Portrait Hero with Z-Axis Parallax Depth ===== */}
-      <section className="relative h-screen w-full overflow-hidden bg-white [mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)] flex items-center justify-center">
+      <section className="relative h-screen w-full overflow-hidden bg-white [mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)]">
 
-        {/* Massive Background Parallax Typography (Z-0) */}
-        <motion.div
-          style={{ y: backgroundY }}
-          className="absolute inset-0 z-0 flex items-center justify-center select-none pointer-events-none overflow-hidden"
-        >
-          <span 
-            className="text-[26vw] font-black tracking-[-0.06em] leading-none uppercase text-[#F4F4F5] whitespace-nowrap opacity-90 font-sans"
-            style={{
-              WebkitTextStroke: '2px rgba(212, 212, 216, 0.7)',
-              letterSpacing: '-0.06em'
-            }}
-          >
-            SOLVE IT
-          </span>
-        </motion.div>
-
-        {/* Portrait Image (Z-10) */}
-        <div className="absolute inset-0 z-10 pointer-events-none">
+        {/* Portrait Image (Z-0) */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
           <img
             src={heroImage}
             alt="Gaurav Acharya"
@@ -104,15 +88,27 @@ function App() {
           />
         </div>
 
+        {/* Massive Parallax Typography with Multiply Blend (Z-10) */}
+        <motion.div
+          style={{ y: backgroundY }}
+          className="absolute inset-0 z-10 flex items-center justify-center select-none pointer-events-none overflow-hidden mix-blend-multiply"
+        >
+          <span 
+            className="text-[24vw] font-black tracking-[-0.05em] leading-none uppercase text-[#8E8E93] whitespace-nowrap select-none font-sans"
+          >
+            SOLVE IT
+          </span>
+        </motion.div>
+
         {/* Smooth bottom blend overlay (Z-15) */}
         <div className="absolute bottom-0 inset-x-0 h-48 bg-gradient-to-t from-[#09090B] via-[#09090B]/70 to-transparent z-15 pointer-events-none"></div>
 
-        {/* Navigation */}
+        {/* Navigation (Z-30) */}
         <motion.nav
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative z-20 flex justify-between items-center px-8 md:px-12 py-6"
+          className="absolute top-0 inset-x-0 z-30 flex justify-between items-center px-8 md:px-12 py-6"
         >
           <span className="text-2xl font-black tracking-tight text-zinc-900">
             gaurav.
