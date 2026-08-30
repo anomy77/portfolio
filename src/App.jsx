@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import heroImage from '/hero-image.png?url';
 import fynal1 from '/images/fynal-1.png?url';
 import fynal2 from '/images/fynal-2.png?url';
@@ -14,6 +14,9 @@ import { ProjectMedia } from './components/ProjectMedia';
 import { MediaLightbox } from './components/MediaLightbox';
 
 function App() {
+  const { scrollY } = useScroll();
+  const backgroundY = useTransform(scrollY, [0, 1000], [0, 350]);
+
   const [fynalTab, setFynalTab] = useState(0);
   const [selectedLightboxProject, setSelectedLightboxProject] = useState(null);
 
@@ -72,11 +75,27 @@ function App() {
   return (
     <div className="bg-[#09090B] text-[#E4E4E7] font-sans min-h-screen selection:bg-white selection:text-black">
 
-      {/* ===== SECTION 1: Full-Bleed Portrait Hero ===== */}
-      <section className="relative h-screen w-full overflow-hidden bg-white [mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)]">
+      {/* ===== SECTION 1: Full-Bleed Portrait Hero with Z-Axis Parallax Depth ===== */}
+      <section className="relative h-screen w-full overflow-hidden bg-white [mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)] flex items-center justify-center">
 
-        {/* Portrait Image */}
-        <div className="absolute inset-0 z-0">
+        {/* Massive Background Parallax Typography (Z-0) */}
+        <motion.div
+          style={{ y: backgroundY }}
+          className="absolute inset-0 z-0 flex items-center justify-center select-none pointer-events-none overflow-hidden"
+        >
+          <span 
+            className="text-[26vw] font-black tracking-[-0.06em] leading-none uppercase text-[#F4F4F5] whitespace-nowrap opacity-90 font-sans"
+            style={{
+              WebkitTextStroke: '2px rgba(212, 212, 216, 0.7)',
+              letterSpacing: '-0.06em'
+            }}
+          >
+            SOLVE IT
+          </span>
+        </motion.div>
+
+        {/* Portrait Image (Z-10) */}
+        <div className="absolute inset-0 z-10 pointer-events-none">
           <img
             src={heroImage}
             alt="Gaurav Acharya"
@@ -85,8 +104,8 @@ function App() {
           />
         </div>
 
-        {/* Smooth bottom blend overlay */}
-        <div className="absolute bottom-0 inset-x-0 h-48 bg-gradient-to-t from-[#09090B] via-[#09090B]/70 to-transparent z-10 pointer-events-none"></div>
+        {/* Smooth bottom blend overlay (Z-15) */}
+        <div className="absolute bottom-0 inset-x-0 h-48 bg-gradient-to-t from-[#09090B] via-[#09090B]/70 to-transparent z-15 pointer-events-none"></div>
 
         {/* Navigation */}
         <motion.nav
