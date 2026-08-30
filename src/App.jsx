@@ -157,29 +157,21 @@ function App() {
           </motion.div>
         )}
 
-        {/* 8-Bit Pixel Sunglasses (Z-25) -- Terminal Glitch Materialization */}
-        <AnimatePresence>
-          {isWearingGlasses && (
-            <motion.div
-              key="pixel-glasses"
-              initial={{ opacity: 0, scale: 1.25, x: '-50%', y: '-50%' }}
-              animate={{ 
-                opacity: [0, 1, 0.4, 1, 0.85, 1],
-                scale: [1.18, 0.96, 1.02, 1],
-                x: ['-50%', '-49%', '-51%', '-50%'],
-                y: '-50%',
-                filter: [
-                  'hue-rotate(90deg) contrast(200%) brightness(1.5)',
-                  'hue-rotate(0deg) contrast(100%) brightness(1)'
-                ]
-              }}
-              exit={{ 
-                opacity: [1, 0.3, 0.8, 0],
-                scale: [1, 1.08, 0.92],
-                filter: 'brightness(2)'
-              }}
-              transition={{ duration: 0.32, ease: "easeOut" }}
-              className="absolute left-1/2 top-[46.8%] z-25 pointer-events-none select-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.85)]"
+        {/* 8-Bit Pixel Sunglasses (Z-25) -- Reveals via the exact same Cursor Radial Torch */}
+        {(isPortraitHovered || isGlassesLocked) && (
+          <div
+            className="absolute inset-0 z-25 pointer-events-none select-none overflow-hidden"
+            style={{
+              WebkitMaskImage: isGlassesLocked
+                ? 'none'
+                : `radial-gradient(circle 220px at ${mousePos.x}px ${mousePos.y}px, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 45%, rgba(0,0,0,0) 80%)`,
+              maskImage: isGlassesLocked
+                ? 'none'
+                : `radial-gradient(circle 220px at ${mousePos.x}px ${mousePos.y}px, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 45%, rgba(0,0,0,0) 80%)`
+            }}
+          >
+            <div
+              className="absolute left-1/2 top-[46.8%] -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_10px_20px_rgba(0,0,0,0.85)]"
               style={{
                 width: 'clamp(230px, 24vw, 350px)'
               }}
@@ -190,9 +182,9 @@ function App() {
                 className="w-full h-auto"
                 style={{ imageRendering: 'pixelated' }}
               />
-            </motion.div>
-          )}
-        </AnimatePresence>
+            </div>
+          </div>
+        )}
 
         {/* Smooth bottom blend overlay (Z-15) */}
         <div className="absolute bottom-0 inset-x-0 h-48 bg-gradient-to-t from-[#09090B] via-[#09090B]/70 to-transparent z-15 pointer-events-none"></div>
