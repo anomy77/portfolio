@@ -9,42 +9,42 @@ const MODELS = [
     id: 'microchip',
     name: 'SILICON IC',
     url: `${baseUrl}models/microchip.glb`,
-    targetScale: 1.15,
+    targetScale: 0.85,
     rotationSpeed: { x: 0.008, y: 0.015, z: 0.005 }
   },
   {
     id: 'gear',
     name: 'ENGINE GEAR',
     url: `${baseUrl}models/gear.glb`,
-    targetScale: 1.05,
+    targetScale: 0.78,
     rotationSpeed: { x: 0.02, y: 0.01, z: 0.015 }
   },
   {
     id: 'computer',
     name: 'WORKSTATION',
     url: `${baseUrl}models/computer.glb`,
-    targetScale: 1.2,
+    targetScale: 0.88,
     rotationSpeed: { x: 0.005, y: 0.012, z: 0.003 }
   },
   {
     id: 'rubikscube',
     name: 'ALGORITHM CUBE',
     url: `${baseUrl}models/rubikscube.glb`,
-    targetScale: 1.0,
+    targetScale: 0.75,
     rotationSpeed: { x: 0.012, y: 0.018, z: 0.01 }
   },
   {
     id: 'plant',
     name: 'SYSTEMS LAB',
     url: `${baseUrl}models/plant.glb`,
-    targetScale: 1.1,
+    targetScale: 0.82,
     rotationSpeed: { x: 0.003, y: 0.01, z: 0.002 }
   },
   {
     id: 'sunglasses',
     name: 'PIXEL SHADES',
     url: `${baseUrl}models/sunglasses.glb`,
-    targetScale: 1.1,
+    targetScale: 0.82,
     rotationSpeed: { x: 0.01, y: 0.015, z: 0.008 }
   }
 ];
@@ -89,19 +89,19 @@ export function Orbiting3DScene({ mousePos = { x: 0, y: 0 } }) {
     updateSize();
 
     // Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.6);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.7);
     scene.add(ambientLight);
 
-    const dirLight1 = new THREE.DirectionalLight(0xffffff, 2.4);
+    const dirLight1 = new THREE.DirectionalLight(0xffffff, 2.5);
     dirLight1.position.set(6, 9, 8);
     scene.add(dirLight1);
 
-    const dirLight2 = new THREE.DirectionalLight(0xd4d4d8, 1.4);
+    const dirLight2 = new THREE.DirectionalLight(0xd4d4d8, 1.5);
     dirLight2.position.set(-6, -4, -4);
     scene.add(dirLight2);
 
-    const pointLight = new THREE.PointLight(0xffffff, 1.8, 25);
-    pointLight.position.set(0, 1, 6);
+    const pointLight = new THREE.PointLight(0xffffff, 2.0, 25);
+    pointLight.position.set(0, 2.5, 6);
     scene.add(pointLight);
 
     // Load Models
@@ -150,12 +150,14 @@ export function Orbiting3DScene({ mousePos = { x: 0, y: 0 } }) {
       );
     });
 
-    // Orbit Parameters
-    const orbitRadiusX = 5.0;
-    const orbitRadiusY = 1.8;
-    const orbitRadiusZ = 3.6;
-    const tiltAngle = -0.36; // -20 degrees slant
-    const speed = 0.00045;
+    // Halo Orbit Parameters (Centered around the head like an angel ring)
+    const orbitCenterX = 0.0;
+    const orbitCenterY = 1.9; // Head level height
+    const orbitRadiusX = 3.6; // Halo width
+    const orbitRadiusZ = 2.9; // Halo depth
+    const pitchAngle = 0.32;  // Tilted forward so front dips over brow, back rises above crown
+    const rollAngle = -0.12;   // Subtle stylish tilt
+    const speed = 0.00048;
 
     let animationFrameId;
     const startTime = performance.now();
@@ -167,26 +169,29 @@ export function Orbiting3DScene({ mousePos = { x: 0, y: 0 } }) {
 
       // Subtle mouse camera parallax
       const currentMouse = mousePosRef.current || { x: 0, y: 0 };
-      const targetCamX = (currentMouse.x / (window.innerWidth || 1) - 0.5) * 0.9;
-      const targetCamY = -(currentMouse.y / (window.innerHeight || 1) - 0.5) * 0.5;
+      const targetCamX = (currentMouse.x / (window.innerWidth || 1) - 0.5) * 0.8;
+      const targetCamY = -(currentMouse.y / (window.innerHeight || 1) - 0.5) * 0.4;
       camera.position.x += (targetCamX - camera.position.x) * 0.05;
       camera.position.y += (targetCamY - camera.position.y) * 0.05;
-      camera.lookAt(0, 0, 0);
+      camera.lookAt(0, 1.2, 0);
 
       objectGroups.forEach((item) => {
         const theta = baseAngle + item.angleOffset;
+        const cosT = Math.cos(theta);
+        const sinT = Math.sin(theta);
 
-        // Parametric slanted ellipse
-        const rawX = orbitRadiusX * Math.cos(theta);
-        const rawY = orbitRadiusY * Math.sin(theta);
-        const rawZ = orbitRadiusZ * Math.sin(theta);
+        // Circular ring in XZ plane
+        const ringX = orbitRadiusX * cosT;
+        const ringZ = orbitRadiusZ * sinT;
 
-        // Slant transformation
-        const cosT = Math.cos(tiltAngle);
-        const sinT = Math.sin(tiltAngle);
-        const x = rawX * cosT - rawY * sinT;
-        const y = rawX * sinT + rawY * cosT;
-        const z = rawZ;
+        // Forward pitch transformation (rotates around X axis)
+        const pitchedY = -ringZ * Math.sin(pitchAngle);
+        const pitchedZ = ringZ * Math.cos(pitchAngle);
+
+        // Roll transformation (rotates around Z axis)
+        const x = ringX * Math.cos(rollAngle) - pitchedY * Math.sin(rollAngle) + orbitCenterX;
+        const y = ringX * Math.sin(rollAngle) + pitchedY * Math.cos(rollAngle) + orbitCenterY;
+        const z = pitchedZ;
 
         item.group.position.set(x, y, z);
 
@@ -197,17 +202,17 @@ export function Orbiting3DScene({ mousePos = { x: 0, y: 0 } }) {
 
         // Dynamic depth scale
         const depthFactor = (z + orbitRadiusZ) / (2 * orbitRadiusZ);
-        const scale = 0.75 + depthFactor * 0.55;
+        const scale = 0.8 + depthFactor * 0.4;
         item.group.scale.setScalar(scale);
       });
 
-      // Pass 1: Render BACK Canvas (Objects with Z < 0)
+      // Pass 1: Render BACK Canvas (Objects with Z < 0, behind head crown)
       objectGroups.forEach((item) => {
         item.group.visible = item.group.position.z < 0;
       });
       backRenderer.render(scene, camera);
 
-      // Pass 2: Render FRONT Canvas (Objects with Z >= 0)
+      // Pass 2: Render FRONT Canvas (Objects with Z >= 0, in front of forehead/brow)
       objectGroups.forEach((item) => {
         item.group.visible = item.group.position.z >= 0;
       });
