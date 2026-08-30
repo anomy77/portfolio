@@ -3,12 +3,40 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export function MediaLightbox({ project, onClose, fynalTab, setFynalTab }) {
   const videoRef = useRef(null);
+  const canvasRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
+  const [ambientMode, setAmbientMode] = useState(true);
   const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState('0:00');
   const [duration, setDuration] = useState('0:00');
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
+
+  // Real-time Ambient Mode for Lightbox
+  useEffect(() => {
+    if (project.type !== 'video' || !ambientMode) return;
+
+    let animId;
+    const canvas = canvasRef.current;
+    const video = videoRef.current;
+    if (!canvas || !video) return;
+
+    const ctx = canvas.getContext('2d', { willReadFrequently: false });
+
+    const renderAmbientGlow = () => {
+      if (video && !video.paused && !video.ended && video.readyState >= 2) {
+        try {
+          ctx.drawImage(video, 0, 0, 32, 18);
+        } catch (e) {
+          // Ignore transient cross-origin frame capture errors
+        }
+      }
+      animId = requestAnimationFrame(renderAmbientGlow);
+    };
+
+    animId = requestAnimationFrame(renderAmbientGlow);
+    return () => cancelAnimationFrame(animId);
+  }, [project.type, ambientMode]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -63,6 +91,11 @@ export function MediaLightbox({ project, onClose, fynalTab, setFynalTab }) {
     setIsMuted(nextMuted);
   };
 
+  const toggleAmbient = (e) => {
+    e?.stopPropagation();
+    setAmbientMode(!ambientMode);
+  };
+
   const handleSpeedChange = (speed) => {
     setPlaybackSpeed(speed);
     if (videoRef.current) {
@@ -106,6 +139,20 @@ export function MediaLightbox({ project, onClose, fynalTab, setFynalTab }) {
             <span className="text-[10px] font-mono tracking-widest text-zinc-400 border border-white/15 px-2.5 py-0.5 uppercase">
               {project.tag}
             </span>
+
+            {project.type === 'video' && (
+              <button
+                type="button"
+                onClick={toggleAmbient}
+                className={`px-3 py-1 text-[10px] font-mono tracking-widest border uppercase transition-colors ${
+                  ambientMode 
+                    ? 'bg-amber-500/20 border-amber-500/40 text-amber-300' 
+                    : 'bg-white/5 border-white/15 text-zinc-400 hover:text-white'
+                }`}
+              >
+                AMBIENT GLOW: {ambientMode ? 'ON' : 'OFF'}
+              </button>
+            )}
           </div>
 
           <div className="flex items-center gap-4">
@@ -126,7 +173,18 @@ export function MediaLightbox({ project, onClose, fynalTab, setFynalTab }) {
           onClick={(e) => e.stopPropagation()}
         >
           {project.type === 'video' ? (
-            <div className="relative w-full max-w-5xl aspect-video bg-zinc-950 border border-white/15 shadow-2xl overflow-hidden flex items-center justify-center">
+            <div className="relative w-full max-w-5xl aspect-video bg-zinc-950 border border-white/15 shadow-2xl overflow-visible flex items-center justify-center">
+              
+              {/* YouTube Ambient Glow Canvas */}
+              {ambientMode && (
+                <canvas
+                  ref={canvasRef}
+                  width={32}
+                  height={18}
+                  className="absolute inset-[-20%] w-[140%] h-[140%] -z-10 blur-3xl opacity-80 saturate-200 pointer-events-none transition-opacity duration-700"
+                />
+              )}
+
               <video
                 ref={videoRef}
                 src={project.videoUrl}
@@ -136,7 +194,7 @@ export function MediaLightbox({ project, onClose, fynalTab, setFynalTab }) {
                 onTimeUpdate={handleTimeUpdate}
                 onLoadedMetadata={handleLoadedMetadata}
                 onClick={togglePlay}
-                className="w-full h-full object-contain cursor-pointer"
+                className="relative z-10 w-full h-full object-contain cursor-pointer"
               />
 
               {/* Bottom Custom Controller Overlay in Modal */}

@@ -2,12 +2,40 @@ import React, { useState, useRef, useEffect } from 'react';
 
 export function ProjectMedia({ project, fynalTab, setFynalTab, onOpenLightbox }) {
   const videoRef = useRef(null);
+  const canvasRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
+  const [ambientMode, setAmbientMode] = useState(true);
   const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState('0:00');
   const [duration, setDuration] = useState('0:00');
   const [isHovered, setIsHovered] = useState(false);
+
+  // Real-time Canvas Ambient Glow Renderer
+  useEffect(() => {
+    if (project.type !== 'video' || !ambientMode) return;
+
+    let animId;
+    const canvas = canvasRef.current;
+    const video = videoRef.current;
+    if (!canvas || !video) return;
+
+    const ctx = canvas.getContext('2d', { willReadFrequently: false });
+
+    const renderAmbientGlow = () => {
+      if (video && !video.paused && !video.ended && video.readyState >= 2) {
+        try {
+          ctx.drawImage(video, 0, 0, 32, 18);
+        } catch (e) {
+          // Ignore transient cross-origin frame capture errors
+        }
+      }
+      animId = requestAnimationFrame(renderAmbientGlow);
+    };
+
+    animId = requestAnimationFrame(renderAmbientGlow);
+    return () => cancelAnimationFrame(animId);
+  }, [project.type, ambientMode]);
 
   const formatTime = (seconds) => {
     if (isNaN(seconds)) return '0:00';
@@ -51,6 +79,11 @@ export function ProjectMedia({ project, fynalTab, setFynalTab, onOpenLightbox })
     setIsMuted(nextMuted);
   };
 
+  const toggleAmbient = (e) => {
+    e?.stopPropagation();
+    setAmbientMode(!ambientMode);
+  };
+
   const handleSeek = (e) => {
     e.stopPropagation();
     if (!videoRef.current) return;
@@ -73,7 +106,7 @@ export function ProjectMedia({ project, fynalTab, setFynalTab, onOpenLightbox })
           className="w-full h-full object-contain object-center transition-transform duration-500 group-hover/img:scale-[1.01]"
         />
 
-        {/* Top Right Expand Trigger */}
+        {/* Top Left Tag */}
         <div className="absolute top-4 left-4 z-20 pointer-events-none">
           <div className="bg-black/80 backdrop-blur-md px-2.5 py-1 border border-white/10 text-[9px] font-mono tracking-widest text-white/70 uppercase flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
@@ -121,6 +154,16 @@ export function ProjectMedia({ project, fynalTab, setFynalTab, onOpenLightbox })
       onMouseLeave={() => setIsHovered(false)}
       onClick={() => onOpenLightbox(project)}
     >
+      {/* YouTube-Style Ambient Glow Canvas */}
+      {ambientMode && (
+        <canvas
+          ref={canvasRef}
+          width={32}
+          height={18}
+          className="absolute inset-[-15%] w-[130%] h-[130%] -z-0 blur-3xl opacity-75 saturate-200 pointer-events-none transition-opacity duration-500"
+        />
+      )}
+
       {/* Video Element */}
       <video
         ref={videoRef}
@@ -132,15 +175,31 @@ export function ProjectMedia({ project, fynalTab, setFynalTab, onOpenLightbox })
         loop
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
-        className="w-full h-full object-cover object-center"
+        className="relative z-10 w-full h-full object-cover object-center"
       />
 
       {/* Top Bar Indicators */}
       <div className="absolute top-4 inset-x-4 flex justify-between items-center z-20 pointer-events-none">
-        <div className="flex items-center gap-2 bg-black/70 backdrop-blur-md px-2.5 py-1 border border-white/10">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span className="text-[9px] font-mono tracking-widest text-white/70 uppercase">LIVE CAPTURE</span>
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 bg-black/70 backdrop-blur-md px-2.5 py-1 border border-white/10">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span className="text-[9px] font-mono tracking-widest text-white/70 uppercase">LIVE CAPTURE</span>
+          </div>
+
+          {/* Ambient Mode Badge Toggle */}
+          <button
+            type="button"
+            onClick={toggleAmbient}
+            className={`pointer-events-auto backdrop-blur-md px-2.5 py-1 text-[9px] font-mono tracking-widest border uppercase transition-colors ${
+              ambientMode 
+                ? 'bg-amber-500/20 border-amber-500/40 text-amber-300' 
+                : 'bg-black/70 border-white/10 text-zinc-400 hover:text-white'
+            }`}
+          >
+            AMBIENT: {ambientMode ? 'ON' : 'OFF'}
+          </button>
         </div>
+
         <div className="flex items-center gap-2">
           <button
             type="button"
@@ -158,8 +217,8 @@ export function ProjectMedia({ project, fynalTab, setFynalTab, onOpenLightbox })
         </div>
       </div>
 
-      {/* Center Play/Pause Overlay Cue on Hover (Zero Blur, Crisp Video) */}
-      <div className={`absolute inset-0 transition-opacity duration-200 flex items-center justify-center pointer-events-none ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+      {/* Center Play/Pause Overlay Cue on Hover */}
+      <div className={`absolute inset-0 z-20 transition-opacity duration-200 flex items-center justify-center pointer-events-none ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
         <button
           type="button"
           onClick={togglePlay}
