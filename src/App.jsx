@@ -1,8 +1,63 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import heroImage from '/hero-image.png?url';
+import fynal1 from '/images/fynal-1.png?url';
+import fynal2 from '/images/fynal-2.png?url';
+import demoMapleads from '/videos/demo-3.mp4?url';
+import demoTubebrief from '/videos/demo-1.mp4?url';
+import demoMarkclip from '/videos/demo-2.mp4?url';
 
 function App() {
+  const [activeTab, setActiveTab] = useState('all');
+
+  const projects = [
+    {
+      id: 'fynal',
+      name: 'FYNAL',
+      subtitle: 'fynal.net — Production Web Platform & Systems Lab',
+      desc: 'High-performance web architecture and digital systems deployment. Engineered for speed, clean aesthetics, and zero runtime overhead.',
+      tag: 'FOUNDER & LIVE PLATFORM',
+      url: 'https://fynal.net',
+      type: 'image',
+      media: fynal1,
+      extraMedia: fynal2,
+      metrics: ['100% Custom Stack', 'Sub-second Load', 'Production Deployed']
+    },
+    {
+      id: 'mapleads',
+      name: 'MAPLEADS',
+      subtitle: 'Google Maps B2B Lead Extractor & Email Discovery',
+      desc: 'High-throughput Manifest V3 prospecting tool with anti-stagnation DOM scrolling, 8x concurrent background email discovery, and Excel-ready CSV export.',
+      tag: 'MV3 EXTENSION',
+      url: 'https://github.com/anomy77/mapleads-lead-extractor',
+      type: 'video',
+      videoUrl: demoMapleads,
+      metrics: ['8x Parallel Workers', '47%+ Email Yield', 'Zero API Fees']
+    },
+    {
+      id: 'tubebrief',
+      name: 'TUBEBRIEF AI',
+      subtitle: 'In-Memory YouTube Caption Interceptor & LLM Synthesizer',
+      desc: 'Extracts live caption tracks directly from YouTube DOM memory to bypass transcription latency. Streams synthesized briefs via Gemini 2.0 Flash in under 2 seconds.',
+      tag: 'AI PIPELINE',
+      url: 'https://github.com/anomy77/tubebrief-ai',
+      type: 'video',
+      videoUrl: demoTubebrief,
+      metrics: ['<2s Latency', 'Gemini 2.0 Flash', 'Zero Server Costs']
+    },
+    {
+      id: 'markclip',
+      name: 'MARKCLIP',
+      subtitle: 'Web-to-Markdown Knowledge Base Clipper',
+      desc: 'Strips boilerplate, preserves structural headings and code fences, and converts full web articles into clean GitHub-flavored Markdown with automated metadata.',
+      tag: 'AST PARSER',
+      url: 'https://github.com/anomy77/markclip-extension',
+      type: 'video',
+      videoUrl: demoMarkclip,
+      metrics: ['<8 KB Bundle', 'Obsidian Ready', 'Zero Dependencies']
+    }
+  ];
+
   return (
     <div className="bg-black text-white font-sans min-h-screen selection:bg-white selection:text-black">
 
@@ -89,7 +144,7 @@ function App() {
             transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
             className="text-4xl md:text-7xl font-black tracking-tight leading-[1.05] mb-24 max-w-5xl uppercase text-white"
           >
-            Software has limits.<br/>I design the physical capabilities that break them.
+            Software has limits.<br/>I design the autonomous systems that break them.
           </motion.h2>
 
           {/* Metrics row with soft gradient divider */}
@@ -97,9 +152,9 @@ function App() {
             <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
               {[
-                { label: 'FOUNDER', value: 'Fynal Technologies' },
-                { label: 'CREATOR', value: 'REFLEX OS' },
-                { label: 'FOCUS', value: 'Spatial Computing & Haptics' },
+                { label: 'FOUNDER', value: 'Fynal Technologies (fynal.net)' },
+                { label: 'SYSTEMS', value: 'Manifest V3 & Scrapers' },
+                { label: 'FOCUS', value: 'Autonomous Web & AI Pipelines' },
               ].map((item, i) => (
                 <motion.div
                   key={item.label}
@@ -118,65 +173,114 @@ function App() {
         </div>
       </section>
 
-      {/* ===== SECTION 3: Projects (Seamless Flow) ===== */}
+      {/* ===== SECTION 3: Projects & Video Showcase ===== */}
       <section id="projects" className="relative bg-black text-white py-24 md:py-36 px-8 md:px-16">
         <div className="max-w-6xl mx-auto">
-          <motion.p
+          <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="text-xs font-bold tracking-[0.3em] text-white/40 mb-16 uppercase"
+            className="flex justify-between items-end mb-16"
           >
-            Current Focus
-          </motion.p>
+            <div>
+              <p className="text-xs font-bold tracking-[0.3em] text-white/40 uppercase mb-2">Featured Systems & Demonstrations</p>
+              <h3 className="text-3xl md:text-5xl font-black tracking-tight">Active Deployments</h3>
+            </div>
+          </motion.div>
 
-          {/* Project rows with soft top gradient line */}
-          <div className="relative flex flex-col">
-            <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-            {[
-              { name: 'REFLEX OS', desc: 'Low-latency runtime for spatial computing hardware & haptic feedback', tag: 'RUNTIME', url: '#' },
-              { name: 'MAPLEADS', desc: 'B2B lead extractor with 8x parallel email discovery engine', tag: 'MV3 EXTENSION', url: 'https://github.com/anomy77/mapleads-lead-extractor' },
-              { name: 'TUBEBRIEF AI', desc: 'Sub-2s video transcript synthesis via Gemini 2.0 Flash', tag: 'LLM PIPELINE', url: 'https://github.com/anomy77/tubebrief-ai' },
-              { name: 'MARKCLIP', desc: 'DOM serialization to clean GitHub-flavored Markdown', tag: 'PARSER', url: 'https://github.com/anomy77/markclip-extension' },
-            ].map((project, i) => (
-              <motion.a
-                key={project.name}
-                href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 30 }}
+          {/* Project Showcase Grid */}
+          <div className="flex flex-col gap-24">
+            {projects.map((project, i) => (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.05 * i }}
-                className="group flex flex-col md:flex-row md:items-center justify-between py-10 border-b border-white/10 hover:border-white/30 transition-colors cursor-pointer"
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.9, delay: 0.1 * i }}
+                className="group border border-white/10 bg-[#070709] rounded-none overflow-hidden transition-colors hover:border-white/25"
               >
-                <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-8">
-                  <h3 className="text-3xl md:text-5xl font-black tracking-tight group-hover:text-gray-400 transition-colors">{project.name}</h3>
-                  <p className="text-sm text-white/40 font-medium md:max-w-sm">{project.desc}</p>
+                {/* Media Container: Video or Images */}
+                <div className="relative w-full aspect-video bg-zinc-950 overflow-hidden border-b border-white/10">
+                  {project.type === 'video' ? (
+                    <video
+                      src={project.videoUrl}
+                      controls
+                      playsInline
+                      muted
+                      autoPlay
+                      loop
+                      className="w-full h-full object-cover object-center"
+                    />
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 w-full h-full bg-zinc-900">
+                      <img
+                        src={project.media}
+                        alt={`${project.name} Screenshot 1`}
+                        className="w-full h-full object-cover border-b md:border-b-0 md:border-r border-white/10"
+                      />
+                      <img
+                        src={project.extraMedia}
+                        alt={`${project.name} Screenshot 2`}
+                        className="w-full h-full object-cover hidden md:block"
+                      />
+                    </div>
+                  )}
+                  <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-md px-3 py-1 text-[10px] font-bold tracking-[0.2em] text-white/70 border border-white/10 uppercase">
+                    {project.tag}
+                  </div>
                 </div>
-                <div className="flex items-center gap-6 mt-4 md:mt-0">
-                  <span className="text-[10px] font-bold tracking-[0.15em] text-white/30 border border-white/10 px-3 py-1">{project.tag}</span>
-                  <svg className="w-4 h-4 text-white/40 group-hover:text-white transition-colors" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
-                  </svg>
+
+                {/* Project Details */}
+                <div className="p-8 md:p-12 flex flex-col justify-between">
+                  <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-8">
+                    <div>
+                      <h4 className="text-3xl md:text-4xl font-black tracking-tight mb-2 group-hover:text-gray-300 transition-colors">
+                        {project.name}
+                      </h4>
+                      <p className="text-sm font-medium text-white/50 mb-4">{project.subtitle}</p>
+                      <p className="text-base text-zinc-400 max-w-2xl leading-relaxed">{project.desc}</p>
+                    </div>
+
+                    <a
+                      href={project.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 self-start bg-white text-black px-6 py-3 text-xs font-bold tracking-widest uppercase hover:bg-zinc-200 transition-colors shrink-0"
+                    >
+                      <span>{project.type === 'image' ? 'Visit fynal.net' : 'View Source Code'}</span>
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
+                      </svg>
+                    </a>
+                  </div>
+
+                  {/* Metrics Pills */}
+                  <div className="flex flex-wrap gap-3 pt-6 border-t border-white/5">
+                    {project.metrics.map((m) => (
+                      <span key={m} className="text-xs font-mono text-zinc-400 bg-white/[0.03] border border-white/5 px-3 py-1">
+                        {m}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </motion.a>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
       {/* ===== FOOTER ===== */}
-      <footer className="relative bg-black py-16 px-8 md:px-16">
+      <footer className="relative bg-black py-16 px-8 md:px-16 border-t border-white/10">
         <div className="max-w-6xl mx-auto">
-          <div className="h-px bg-gradient-to-r from-transparent via-white/15 to-transparent mb-12"></div>
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
             <div>
               <p className="text-2xl font-black tracking-tight mb-2">gaurav.</p>
+              <p className="text-xs text-zinc-500 mb-1">Founder, Fynal Technologies</p>
               <a href="mailto:acryagaurav@gmail.com" className="text-white/40 hover:text-white transition-colors text-sm font-mono">acryagaurav@gmail.com</a>
             </div>
             <div className="flex gap-8">
+              <a href="https://fynal.net" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white transition-colors text-sm font-bold tracking-wide">FYNAL.NET</a>
               <a href="https://github.com/anomy77" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white transition-colors text-sm font-bold tracking-wide">GITHUB</a>
               <a href="Gaurav_Acharya_Resume.pdf" target="_blank" className="text-white/40 hover:text-white transition-colors text-sm font-bold tracking-wide">RESUME</a>
             </div>
