@@ -171,9 +171,9 @@ function App() {
             }}
           >
             <div
-              className="absolute left-1/2 top-[46.8%] -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_10px_20px_rgba(0,0,0,0.85)]"
+              className="absolute left-1/2 top-[47.6%] -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_10px_20px_rgba(0,0,0,0.85)]"
               style={{
-                width: 'clamp(230px, 24vw, 350px)'
+                width: 'clamp(260px, 26vw, 380px)'
               }}
             >
               <img
