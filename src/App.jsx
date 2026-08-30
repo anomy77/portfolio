@@ -1,16 +1,17 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import heroImage from '/hero-image.png?url';
-import heroCutout from '/hero-cutout.png?url';
-import sunglassesImg from '/sunglasses.png?url';
-import fynal1 from '/images/fynal-1.png?url';
-import fynal2 from '/images/fynal-2.png?url';
-import demoMapleads from '/videos/demo-3.mp4?url';
-import demoTubebrief from '/videos/demo-1.mp4?url';
-import demoMarkclip from '/videos/demo-2.mp4?url';
-import thumbMapleads from '/images/demo-3-thumb.jpg?url';
-import thumbTubebrief from '/images/demo-1-thumb.jpg?url';
-import thumbMarkclip from '/images/demo-2-thumb.jpg?url';
+const baseUrl = import.meta.env.BASE_URL || '/';
+const heroImage = `${baseUrl}hero-image.png`;
+const heroCutout = `${baseUrl}hero-cutout.png`;
+const sunglassesImg = `${baseUrl}sunglasses.png`;
+const fynal1 = `${baseUrl}images/fynal-1.png`;
+const fynal2 = `${baseUrl}images/fynal-2.png`;
+const demoMapleads = `${baseUrl}videos/demo-3.mp4`;
+const demoTubebrief = `${baseUrl}videos/demo-1.mp4`;
+const demoMarkclip = `${baseUrl}videos/demo-2.mp4`;
+const thumbMapleads = `${baseUrl}images/demo-3-thumb.jpg`;
+const thumbTubebrief = `${baseUrl}images/demo-1-thumb.jpg`;
+const thumbMarkclip = `${baseUrl}images/demo-2-thumb.jpg`;
 
 import { ProjectMedia } from './components/ProjectMedia';
 import { MediaLightbox } from './components/MediaLightbox';
