@@ -73,13 +73,11 @@ export function ProjectMedia({ project, fynalTab, setFynalTab, onOpenLightbox })
           className="w-full h-full object-contain object-center transition-transform duration-500 group-hover/img:scale-[1.01]"
         />
 
-        {/* Hover zoom cue */}
-        <div className="absolute inset-0 bg-black/30 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-          <div className="bg-black/80 backdrop-blur-md px-4 py-2 border border-white/20 text-xs font-mono tracking-widest text-white uppercase flex items-center gap-2">
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7" />
-            </svg>
-            Click to Expand
+        {/* Top Right Expand Trigger */}
+        <div className="absolute top-4 left-4 z-20 pointer-events-none">
+          <div className="bg-black/80 backdrop-blur-md px-2.5 py-1 border border-white/10 text-[9px] font-mono tracking-widest text-white/70 uppercase flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+            <span>PLATFORM SHOWCASE</span>
           </div>
         </div>
 
@@ -160,19 +158,19 @@ export function ProjectMedia({ project, fynalTab, setFynalTab, onOpenLightbox })
         </div>
       </div>
 
-      {/* Center Play/Pause Overlay Cue on Hover */}
-      <div className={`absolute inset-0 bg-black/20 backdrop-blur-[2px] transition-opacity duration-200 flex items-center justify-center pointer-events-none ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+      {/* Center Play/Pause Overlay Cue on Hover (Zero Blur, Crisp Video) */}
+      <div className={`absolute inset-0 transition-opacity duration-200 flex items-center justify-center pointer-events-none ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
         <button
           type="button"
           onClick={togglePlay}
-          className="pointer-events-auto w-14 h-14 rounded-full bg-white/90 hover:bg-white text-black flex items-center justify-center shadow-2xl transition-transform hover:scale-105"
+          className="pointer-events-auto w-12 h-12 rounded-full bg-black/80 hover:bg-white text-white hover:text-black border border-white/20 flex items-center justify-center shadow-2xl transition-all hover:scale-105"
         >
           {isPlaying ? (
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
               <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
             </svg>
           ) : (
-            <svg className="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
               <path d="M8 5v14l11-7z" />
             </svg>
           )}
