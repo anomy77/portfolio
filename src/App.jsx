@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import heroImage from '/hero-image.png?url';
 import heroCutout from '/hero-cutout.png?url';
@@ -15,12 +15,23 @@ import { ProjectMedia } from './components/ProjectMedia';
 import { MediaLightbox } from './components/MediaLightbox';
 
 function App() {
+  const heroRef = useRef(null);
   const { scrollY } = useScroll();
   const backgroundY = useTransform(scrollY, [0, 1000], [0, 350]);
 
   const [isPortraitHovered, setIsPortraitHovered] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [fynalTab, setFynalTab] = useState(0);
   const [selectedLightboxProject, setSelectedLightboxProject] = useState(null);
+
+  const handleHeroMouseMove = (e) => {
+    if (!heroRef.current) return;
+    const rect = heroRef.current.getBoundingClientRect();
+    setMousePos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    });
+  };
 
   const flagshipProject = {
     id: 'fynal',
@@ -78,22 +89,20 @@ function App() {
     <div className="bg-[#09090B] text-[#E4E4E7] font-sans min-h-screen selection:bg-white selection:text-black">
 
       {/* ===== SECTION 1: Full-Bleed Portrait Hero with True Z-Axis Depth ===== */}
-      <section className="relative h-screen w-full overflow-hidden bg-white [mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)] flex items-center justify-center">
+      <section 
+        ref={heroRef}
+        className="relative h-screen w-full overflow-hidden bg-white [mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)] flex items-center justify-center"
+      >
 
-        {/* Massive Background Parallax Typography (Z-5) */}
+        {/* Massive Background Parallax Typography (Z-5) -- Zero Elevation on Hover */}
         <motion.div
           style={{ y: backgroundY }}
-          className={`absolute inset-0 z-5 flex items-center justify-center select-none pointer-events-none overflow-hidden transition-all duration-700 ease-out ${
-            isPortraitHovered ? 'scale-[1.01] opacity-100' : 'opacity-85'
-          }`}
+          className="absolute inset-0 z-5 flex items-center justify-center select-none pointer-events-none overflow-hidden"
         >
           <span 
-            className="text-[26vw] font-black tracking-[-0.06em] leading-none uppercase whitespace-nowrap select-none font-sans transition-colors duration-700"
+            className="text-[26vw] font-black tracking-[-0.06em] leading-none uppercase whitespace-nowrap select-none font-sans text-[#E4E4E7]"
             style={{
-              color: isPortraitHovered ? '#D4D4D8' : '#E4E4E7',
-              WebkitTextStroke: isPortraitHovered 
-                ? '2px rgba(161, 161, 170, 0.8)' 
-                : '2px rgba(212, 212, 216, 0.6)',
+              WebkitTextStroke: '2px rgba(212, 212, 216, 0.9)',
               letterSpacing: '-0.06em'
             }}
           >
@@ -101,15 +110,21 @@ function App() {
           </span>
         </motion.div>
 
-        {/* Portrait Cutout (Z-10) -- Sits directly in front of the text */}
+        {/* Portrait Cutout (Z-10) -- Radial Torch Reveal Centered on Cursor */}
         <div className="absolute inset-0 z-10 pointer-events-none flex items-center justify-center">
           <img
             src={heroCutout}
             alt="Gaurav Acharya"
-            className={`w-full h-full object-cover object-center grayscale contrast-105 transition-all duration-700 ease-out ${
-              isPortraitHovered ? 'opacity-80' : 'opacity-100'
-            }`}
-            style={{ objectPosition: '50% 15%' }}
+            className="w-full h-full object-cover object-center grayscale contrast-105"
+            style={{
+              objectPosition: '50% 15%',
+              WebkitMaskImage: isPortraitHovered
+                ? `radial-gradient(circle 240px at ${mousePos.x}px ${mousePos.y}px, rgba(0,0,0,0.40) 0%, rgba(0,0,0,0.72) 45%, rgba(0,0,0,1) 85%)`
+                : 'none',
+              maskImage: isPortraitHovered
+                ? `radial-gradient(circle 240px at ${mousePos.x}px ${mousePos.y}px, rgba(0,0,0,0.40) 0%, rgba(0,0,0,0.72) 45%, rgba(0,0,0,1) 85%)`
+                : 'none'
+            }}
           />
         </div>
 
@@ -118,6 +133,7 @@ function App() {
           className="absolute inset-x-0 top-0 mx-auto w-[85vw] sm:w-[50vw] md:w-[38vw] lg:w-[28vw] max-w-md h-[78vh] z-20 cursor-pointer pointer-events-auto"
           onMouseEnter={() => setIsPortraitHovered(true)}
           onMouseLeave={() => setIsPortraitHovered(false)}
+          onMouseMove={handleHeroMouseMove}
         />
 
         {/* Smooth bottom blend overlay (Z-15) */}
