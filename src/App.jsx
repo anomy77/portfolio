@@ -107,7 +107,7 @@ function App() {
         onMouseEnter={() => setIsPortraitHovered(true)}
         onMouseLeave={() => setIsPortraitHovered(false)}
         onMouseMove={handleHeroMouseMove}
-        className="relative h-screen w-full overflow-hidden bg-white [mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)] flex items-center justify-center cursor-pointer"
+        className="relative h-screen w-full overflow-hidden bg-white [mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)] flex items-center justify-center"
       >
 
         {/* 3D Orbiting Objects (Z-8 Back / Z-26 Front) */}
