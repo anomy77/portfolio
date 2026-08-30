@@ -9,7 +9,7 @@ function App() {
       {/* ===== HERO: Full-Bleed Portrait ===== */}
       <section className="relative h-screen w-full overflow-hidden">
 
-        {/* Portrait Image -- fills entire viewport */}
+        {/* Portrait Image -- fills entire viewport with multi-stop seamless fade */}
         <div className="absolute inset-0 z-0">
           <img
             src={heroImage}
@@ -17,10 +17,11 @@ function App() {
             className="w-full h-full object-cover object-top grayscale"
             style={{ objectPosition: '50% 15%' }}
           />
-          {/* Left-side dark gradient so nav text is readable */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent"></div>
-          {/* Bottom fade */}
-          <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-black to-transparent"></div>
+          {/* Subtle dark vignette on top and sides for text contrast */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/20 pointer-events-none"></div>
+          {/* Deep multi-stop bottom fade that seamlessly melts the portrait into pure black */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent via-45% to-black pointer-events-none"></div>
+          <div className="absolute inset-x-0 bottom-0 h-96 bg-gradient-to-t from-black via-black/90 to-transparent pointer-events-none"></div>
         </div>
 
         {/* Navigation */}
@@ -76,50 +77,57 @@ function App() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="absolute bottom-8 left-8 md:left-12 z-10"
+          className="absolute bottom-8 left-8 md:left-12 z-20"
         >
           <p className="text-xs font-bold tracking-[0.3em] uppercase text-white/60 mb-1">Systems & Browser Engineer</p>
           <p className="text-xs tracking-widest uppercase text-white/40">Kathmandu, Nepal</p>
         </motion.div>
       </section>
 
-      {/* ===== SECTION 2: Value Proposition (Dark) ===== */}
-      <section className="bg-black text-white py-32 md:py-48 px-8 md:px-16 border-t border-white/10">
-        <div className="max-w-6xl mx-auto">
+      {/* ===== SECTION 2: Value Proposition (Seamless Dark Flow) ===== */}
+      <section className="relative bg-black text-white pt-24 pb-32 md:pt-36 md:pb-48 px-8 md:px-16 overflow-hidden">
+        {/* Soft atmospheric ambient glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-gradient-to-b from-white/[0.03] to-transparent blur-3xl pointer-events-none"></div>
+
+        <div className="max-w-6xl mx-auto relative z-10">
           <motion.h2
-            initial={{ opacity: 0, y: 60 }}
+            initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
             className="text-4xl md:text-7xl font-black tracking-tight leading-[1.05] mb-24 max-w-5xl uppercase text-white"
           >
             Software has limits.<br/>I design the physical capabilities that break them.
           </motion.h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-white/10">
-            {[
-              { label: 'FOUNDER', value: 'Fynal Technologies' },
-              { label: 'CREATOR', value: 'REFLEX OS' },
-              { label: 'FOCUS', value: 'Spatial Computing & Haptics' },
-            ].map((item, i) => (
-              <motion.div
-                key={item.label}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.1 * (i + 1) }}
-                className="py-12 border-b md:border-b-0 md:border-r last:border-r-0 border-white/10 md:px-8 first:md:pl-0 last:md:pr-0"
-              >
-                <p className="text-xs font-bold tracking-[0.2em] text-white/40 mb-3">{item.label}</p>
-                <p className="text-2xl font-black tracking-tight text-white">{item.value}</p>
-              </motion.div>
-            ))}
+          {/* Metrics row with soft gradient divider */}
+          <div className="relative pt-12">
+            <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+              {[
+                { label: 'FOUNDER', value: 'Fynal Technologies' },
+                { label: 'CREATOR', value: 'REFLEX OS' },
+                { label: 'FOCUS', value: 'Spatial Computing & Haptics' },
+              ].map((item, i) => (
+                <motion.div
+                  key={item.label}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.1 * (i + 1) }}
+                  className="py-10 border-b md:border-b-0 md:border-r last:border-r-0 border-white/10 md:px-8 first:md:pl-0 last:md:pr-0"
+                >
+                  <p className="text-xs font-bold tracking-[0.2em] text-white/40 mb-3">{item.label}</p>
+                  <p className="text-2xl font-black tracking-tight text-white">{item.value}</p>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ===== SECTION 3: Projects (Black) ===== */}
-      <section id="projects" className="bg-black text-white py-32 md:py-48 px-8 md:px-16">
+      {/* ===== SECTION 3: Projects (Seamless Flow) ===== */}
+      <section id="projects" className="relative bg-black text-white py-24 md:py-36 px-8 md:px-16">
         <div className="max-w-6xl mx-auto">
           <motion.p
             initial={{ opacity: 0 }}
@@ -131,8 +139,9 @@ function App() {
             Current Focus
           </motion.p>
 
-          {/* Project rows */}
-          <div className="flex flex-col border-t border-white/10">
+          {/* Project rows with soft top gradient line */}
+          <div className="relative flex flex-col">
+            <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
             {[
               { name: 'REFLEX OS', desc: 'Low-latency runtime for spatial computing hardware & haptic feedback', tag: 'RUNTIME', url: '#' },
               { name: 'MAPLEADS', desc: 'B2B lead extractor with 8x parallel email discovery engine', tag: 'MV3 EXTENSION', url: 'https://github.com/anomy77/mapleads-lead-extractor' },
@@ -165,15 +174,18 @@ function App() {
       </section>
 
       {/* ===== FOOTER ===== */}
-      <footer className="bg-black border-t border-white/10 py-16 px-8 md:px-16">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
-          <div>
-            <p className="text-2xl font-black tracking-tight mb-2">gaurav.</p>
-            <a href="mailto:acryagaurav@gmail.com" className="text-white/40 hover:text-white transition-colors text-sm font-mono">acryagaurav@gmail.com</a>
-          </div>
-          <div className="flex gap-8">
-            <a href="https://github.com/anomy77" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white transition-colors text-sm font-bold tracking-wide">GITHUB</a>
-            <a href="Gaurav_Acharya_Resume.pdf" target="_blank" className="text-white/40 hover:text-white transition-colors text-sm font-bold tracking-wide">RESUME</a>
+      <footer className="relative bg-black py-16 px-8 md:px-16">
+        <div className="max-w-6xl mx-auto">
+          <div className="h-px bg-gradient-to-r from-transparent via-white/15 to-transparent mb-12"></div>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+            <div>
+              <p className="text-2xl font-black tracking-tight mb-2">gaurav.</p>
+              <a href="mailto:acryagaurav@gmail.com" className="text-white/40 hover:text-white transition-colors text-sm font-mono">acryagaurav@gmail.com</a>
+            </div>
+            <div className="flex gap-8">
+              <a href="https://github.com/anomy77" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white transition-colors text-sm font-bold tracking-wide">GITHUB</a>
+              <a href="Gaurav_Acharya_Resume.pdf" target="_blank" className="text-white/40 hover:text-white transition-colors text-sm font-bold tracking-wide">RESUME</a>
+            </div>
           </div>
         </div>
       </footer>
