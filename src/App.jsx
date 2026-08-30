@@ -149,86 +149,106 @@ function App() {
         </motion.div>
       </section>
 
-      {/* ===== SECTION 2: Authentic Engineering Manifesto ===== */}
-      <section className="relative bg-black text-white pt-24 pb-28 md:pt-36 md:pb-36 px-8 md:px-16 overflow-hidden">
-        <div className="max-w-6xl mx-auto relative z-10">
+      {/* ===== SECTION 2: Technical Manifesto & Schematic Tabular Architecture ===== */}
+      <section className="relative bg-[#09090B] text-[#E4E4E7] pt-24 pb-28 md:pt-36 md:pb-36 px-8 md:px-16 border-t border-[#27272A]/50">
+        <div className="max-w-6xl mx-auto">
+          
+          {/* Section Terminal Tag */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-16"
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="flex items-center gap-3 font-mono text-[11px] text-[#A1A1AA] tracking-[0.25em] uppercase mb-8"
           >
-            <p className="text-xs font-mono tracking-[0.3em] text-white/40 uppercase mb-4">Engineering Philosophy</p>
-            <h2 className="text-3xl md:text-6xl font-black tracking-tight leading-[1.1] max-w-4xl text-white">
-              I write software from first principles. Fast engines, browser internals, and zero unnecessary dependencies.
-            </h2>
+            <span className="text-[#71717A]">01 //</span>
+            <span>SYSTEMS SPECIFICATION & ARCHITECTURE</span>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 pt-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
+            
+            {/* Left Column: Tight Engineered Headline & Body Block */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className="md:col-span-6 text-zinc-400 text-base md:text-lg leading-relaxed font-normal"
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-6 flex flex-col"
             >
-              <p className="mb-6">
-                Most web tools today are bloated wrappers layered over slow APIs and recurring server tolls.
-              </p>
-              <p>
-                I focus on direct execution: in-memory stream interception, background worker concurrency, and lightweight local-first architecture that runs fast and costs nothing to maintain.
-              </p>
+              <h2 className="text-3xl md:text-5xl lg:text-[52px] font-extrabold tracking-[-0.04em] leading-[1.02] text-[#E4E4E7] mb-8">
+                I write software from first principles. Fast engines, browser internals, and zero unnecessary dependencies.
+              </h2>
+
+              <div className="space-y-4 text-[#A1A1AA] text-base md:text-lg leading-relaxed font-normal">
+                <p>
+                  Most modern web software is bloated with vendor dependencies, heavy SaaS wrappers, and recurring API tolls.
+                </p>
+                <p>
+                  I focus on direct execution: in-memory stream interception, background worker concurrency, and lightweight local-first architecture that runs with sub-millisecond execution.
+                </p>
+              </div>
             </motion.div>
 
+            {/* Right Column: Brutalist Tabular List with Hard 1px Linear Dividers (Zero Cards) */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="md:col-span-6 flex flex-col gap-6"
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-6 flex flex-col border-t border-[#27272A]"
             >
-              <div className="bg-white/[0.02] border border-white/10 p-6">
-                <p className="text-xs font-mono text-white/50 tracking-wider uppercase mb-1">01 • Browser Internals & MV3</p>
-                <p className="text-sm text-zinc-300 font-medium leading-relaxed">
-                  Reverse-engineering DOM virtualization and running parallel background workers directly inside Chrome.
-                </p>
-              </div>
-
-              <div className="bg-white/[0.02] border border-white/10 p-6">
-                <p className="text-xs font-mono text-white/50 tracking-wider uppercase mb-1">02 • Direct Stream Interception</p>
-                <p className="text-sm text-zinc-300 font-medium leading-relaxed">
-                  Bypassing heavy server transcription by reading live caption and data streams straight from memory.
-                </p>
-              </div>
-
-              <div className="bg-white/[0.02] border border-white/10 p-6">
-                <p className="text-xs font-mono text-white/50 tracking-wider uppercase mb-1">03 • Full-Stack Deployments</p>
-                <p className="text-sm text-zinc-300 font-medium leading-relaxed">
-                  Founder at Fynal Technologies (fynal.net), deploying clean digital platforms and bespoke tools.
-                </p>
-              </div>
+              {[
+                {
+                  index: '01',
+                  category: 'BROWSER INTERNALS & MV3',
+                  detail: 'Reverse-engineering virtualized DOM state and running parallel worker concurrency directly inside browser runtime memory without getting throttled or detected.'
+                },
+                {
+                  index: '02',
+                  category: 'DIRECT STREAM INTERCEPTION',
+                  detail: 'Eliminating heavy cloud transcription middleware by intercepting live caption and audio binary buffers straight from client memory into Gemini 2.0 Flash.'
+                },
+                {
+                  index: '03',
+                  category: 'FULL-STACK LABS & DEPLOYMENT',
+                  detail: 'Founder of Fynal Technologies (fynal.net). Architecting high-performance digital platforms, zero-overhead tooling, and custom infrastructure stacks.'
+                }
+              ].map((item) => (
+                <div
+                  key={item.index}
+                  className="py-7 border-b border-[#27272A] flex flex-col gap-2.5 transition-colors group"
+                >
+                  <div className="flex items-center gap-3 font-mono text-[11px] tracking-[0.2em] text-[#A1A1AA] uppercase">
+                    <span className="text-[#71717A] font-semibold">{item.index}</span>
+                    <span className="text-[#3F3F46]">•</span>
+                    <span className="text-[#D4D4D8] font-medium tracking-[0.2em]">{item.category}</span>
+                  </div>
+                  <p className="text-[#A1A1AA] text-sm md:text-[15px] leading-relaxed pl-7">
+                    {item.detail}
+                  </p>
+                </div>
+              ))}
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* ===== SECTION 3: Flagship Platform Spotlight (Fynal.net) ===== */}
-      <section id="flagship" className="relative bg-black text-white py-20 md:py-28 px-8 md:px-16">
+      <section id="flagship" className="relative bg-[#09090B] text-[#E4E4E7] py-24 md:py-32 px-8 md:px-16 border-t border-[#27272A]/50">
         <div className="max-w-6xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="mb-12"
+            className="flex items-center gap-3 font-mono text-[11px] text-[#A1A1AA] tracking-[0.25em] uppercase mb-10"
           >
-            <p className="text-xs font-mono tracking-[0.3em] text-white/40 uppercase mb-2">Flagship Platform</p>
-            <h3 className="text-3xl md:text-5xl font-black tracking-tight">Fynal Technologies</h3>
+            <span className="text-[#71717A]">02 //</span>
+            <span>FLAGSHIP INFRASTRUCTURE</span>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.9 }}
@@ -248,20 +268,20 @@ function App() {
             <div className="flex flex-col gap-6 px-2 md:px-4">
               <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
                 <div>
-                  <h4 className="text-2xl md:text-3xl font-black tracking-tight mb-2">
+                  <h3 className="text-2xl md:text-4xl font-extrabold tracking-[-0.035em] mb-2 text-[#E4E4E7]">
                     {flagshipProject.name}
-                  </h4>
-                  <p className="text-sm font-medium text-white/50 mb-3">{flagshipProject.subtitle}</p>
-                  <p className="text-base text-zinc-400 max-w-3xl leading-relaxed">{flagshipProject.desc}</p>
+                  </h3>
+                  <p className="text-sm font-mono text-[#A1A1AA] mb-3">{flagshipProject.subtitle}</p>
+                  <p className="text-base text-[#A1A1AA] max-w-3xl leading-relaxed">{flagshipProject.desc}</p>
                 </div>
 
                 <div className="flex items-center gap-3 shrink-0">
                   <button
                     type="button"
                     onClick={() => setSelectedLightboxProject(flagshipProject)}
-                    className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 px-5 py-3 text-xs font-bold tracking-widest uppercase transition-colors"
+                    className="inline-flex items-center gap-2 bg-[#27272A]/60 hover:bg-[#27272A] text-[#E4E4E7] border border-[#3F3F46] px-5 py-2.5 text-xs font-mono tracking-wider uppercase transition-colors"
                   >
-                    <span>Demo</span>
+                    <span>Inspect</span>
                     <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7" />
                     </svg>
@@ -271,10 +291,10 @@ function App() {
                     href={flagshipProject.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-white text-black px-6 py-3 text-xs font-bold tracking-widest uppercase hover:bg-zinc-200 transition-colors"
+                    className="inline-flex items-center gap-2 bg-[#E4E4E7] text-[#09090B] px-5 py-2.5 text-xs font-mono font-bold tracking-wider uppercase hover:bg-white transition-colors"
                   >
-                    <span>Visit fynal.net</span>
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <span>fynal.net</span>
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
                     </svg>
                   </a>
@@ -284,7 +304,7 @@ function App() {
               {/* Metrics Pills */}
               <div className="flex flex-wrap gap-2.5">
                 {flagshipProject.metrics.map((m) => (
-                  <span key={m} className="text-xs font-mono text-zinc-400 bg-white/[0.04] border border-white/10 px-3.5 py-1.5 rounded-none">
+                  <span key={m} className="text-xs font-mono text-[#A1A1AA] bg-white/[0.02] border border-[#27272A] px-3 py-1">
                     {m}
                   </span>
                 ))}
@@ -295,24 +315,24 @@ function App() {
       </section>
 
       {/* ===== SECTION 4: Browser Engines & Extensions ===== */}
-      <section id="projects" className="relative bg-black text-white py-20 md:py-28 px-8 md:px-16">
+      <section id="projects" className="relative bg-[#09090B] text-[#E4E4E7] py-24 md:py-32 px-8 md:px-16 border-t border-[#27272A]/50">
         <div className="max-w-6xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="mb-16"
+            className="flex items-center gap-3 font-mono text-[11px] text-[#A1A1AA] tracking-[0.25em] uppercase mb-16"
           >
-            <p className="text-xs font-mono tracking-[0.3em] text-white/40 uppercase mb-2">Proof of Work</p>
-            <h3 className="text-3xl md:text-5xl font-black tracking-tight">Browser Engines & Extensions</h3>
+            <span className="text-[#71717A]">03 //</span>
+            <span>SYSTEMS DEMONSTRATIONS & EXTENSIONS</span>
           </motion.div>
 
           <div className="flex flex-col gap-28">
             {extensionProjects.map((project, i) => (
               <motion.div
                 key={project.id}
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.9, delay: 0.1 * i }}
@@ -330,18 +350,18 @@ function App() {
                 <div className="flex flex-col gap-6 px-2 md:px-4">
                   <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
                     <div>
-                      <h4 className="text-3xl md:text-4xl font-black tracking-tight mb-2 group-hover:text-gray-300 transition-colors">
+                      <h4 className="text-2xl md:text-3xl font-extrabold tracking-[-0.035em] mb-2 text-[#E4E4E7]">
                         {project.name}
                       </h4>
-                      <p className="text-sm font-medium text-white/50 mb-3">{project.subtitle}</p>
-                      <p className="text-base text-zinc-400 max-w-3xl leading-relaxed">{project.desc}</p>
+                      <p className="text-sm font-mono text-[#A1A1AA] mb-3">{project.subtitle}</p>
+                      <p className="text-base text-[#A1A1AA] max-w-3xl leading-relaxed">{project.desc}</p>
                     </div>
 
                     <div className="flex items-center gap-3 shrink-0">
                       <button
                         type="button"
                         onClick={() => setSelectedLightboxProject(project)}
-                        className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 px-5 py-3 text-xs font-bold tracking-widest uppercase transition-colors"
+                        className="inline-flex items-center gap-2 bg-[#27272A]/60 hover:bg-[#27272A] text-[#E4E4E7] border border-[#3F3F46] px-5 py-2.5 text-xs font-mono tracking-wider uppercase transition-colors"
                       >
                         <span>Demo</span>
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -353,10 +373,10 @@ function App() {
                         href={project.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 bg-white text-black px-6 py-3 text-xs font-bold tracking-widest uppercase hover:bg-zinc-200 transition-colors"
+                        className="inline-flex items-center gap-2 bg-[#E4E4E7] text-[#09090B] px-5 py-2.5 text-xs font-mono font-bold tracking-wider uppercase hover:bg-white transition-colors"
                       >
-                        <span>Source Code</span>
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <span>Source</span>
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
                         </svg>
                       </a>
@@ -366,7 +386,7 @@ function App() {
                   {/* Metrics Pills */}
                   <div className="flex flex-wrap gap-2.5">
                     {project.metrics.map((m) => (
-                      <span key={m} className="text-xs font-mono text-zinc-400 bg-white/[0.04] border border-white/10 px-3.5 py-1.5 rounded-none">
+                      <span key={m} className="text-xs font-mono text-[#A1A1AA] bg-white/[0.02] border border-[#27272A] px-3 py-1">
                         {m}
                       </span>
                     ))}
@@ -379,18 +399,18 @@ function App() {
       </section>
 
       {/* ===== FOOTER ===== */}
-      <footer className="relative bg-black py-16 px-8 md:px-16 border-t border-white/10">
+      <footer className="relative bg-[#09090B] py-16 px-8 md:px-16 border-t border-[#27272A]">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
             <div>
-              <p className="text-2xl font-black tracking-tight mb-2">gaurav.</p>
-              <p className="text-xs text-zinc-500 mb-1">Founder, Fynal Technologies</p>
-              <a href="mailto:acryagaurav@gmail.com" className="text-white/40 hover:text-white transition-colors text-sm font-mono">acryagaurav@gmail.com</a>
+              <p className="text-2xl font-extrabold tracking-tight mb-2 text-[#E4E4E7]">gaurav.</p>
+              <p className="text-xs font-mono text-[#71717A] mb-1">Founder, Fynal Technologies</p>
+              <a href="mailto:acryagaurav@gmail.com" className="text-[#A1A1AA] hover:text-[#E4E4E7] transition-colors text-sm font-mono">acryagaurav@gmail.com</a>
             </div>
             <div className="flex gap-8">
-              <a href="https://fynal.net" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white transition-colors text-sm font-bold tracking-wide">FYNAL.NET</a>
-              <a href="https://github.com/anomy77" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white transition-colors text-sm font-bold tracking-wide">GITHUB</a>
-              <a href="Gaurav_Acharya_Resume.pdf" target="_blank" className="text-white/40 hover:text-white transition-colors text-sm font-bold tracking-wide">RESUME</a>
+              <a href="https://fynal.net" target="_blank" rel="noopener noreferrer" className="text-[#A1A1AA] hover:text-[#E4E4E7] transition-colors text-xs font-mono tracking-widest uppercase">FYNAL.NET</a>
+              <a href="https://github.com/anomy77" target="_blank" rel="noopener noreferrer" className="text-[#A1A1AA] hover:text-[#E4E4E7] transition-colors text-xs font-mono tracking-widest uppercase">GITHUB</a>
+              <a href="Gaurav_Acharya_Resume.pdf" target="_blank" className="text-[#A1A1AA] hover:text-[#E4E4E7] transition-colors text-xs font-mono tracking-widest uppercase">RESUME</a>
             </div>
           </div>
         </div>
