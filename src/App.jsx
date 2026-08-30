@@ -70,10 +70,10 @@ function App() {
   ];
 
   return (
-    <div className="bg-black text-white font-sans min-h-screen selection:bg-white selection:text-black">
+    <div className="bg-[#09090B] text-[#E4E4E7] font-sans min-h-screen selection:bg-white selection:text-black">
 
       {/* ===== SECTION 1: Full-Bleed Portrait Hero ===== */}
-      <section className="relative h-screen w-full overflow-hidden bg-white [mask-image:linear-gradient(to_bottom,black_85%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_85%,transparent_100%)]">
+      <section className="relative h-screen w-full overflow-hidden bg-white [mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)]">
 
         {/* Portrait Image */}
         <div className="absolute inset-0 z-0">
@@ -84,6 +84,9 @@ function App() {
             style={{ objectPosition: '50% 15%' }}
           />
         </div>
+
+        {/* Smooth bottom blend overlay */}
+        <div className="absolute bottom-0 inset-x-0 h-48 bg-gradient-to-t from-[#09090B] via-[#09090B]/70 to-transparent z-10 pointer-events-none"></div>
 
         {/* Navigation */}
         <motion.nav
@@ -150,7 +153,7 @@ function App() {
       </section>
 
       {/* ===== SECTION 2: Technical Manifesto & Schematic Tabular Architecture ===== */}
-      <section className="relative bg-[#09090B] text-[#E4E4E7] pt-24 pb-28 md:pt-36 md:pb-36 px-8 md:px-16 border-t border-[#27272A]/50">
+      <section className="relative bg-[#09090B] text-[#E4E4E7] pt-20 pb-28 md:pt-28 md:pb-36 px-8 md:px-16">
         <div className="max-w-6xl mx-auto">
           
           {/* Section Terminal Tag */}
