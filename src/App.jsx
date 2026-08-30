@@ -14,6 +14,7 @@ import thumbMarkclip from '/images/demo-2-thumb.jpg?url';
 
 import { ProjectMedia } from './components/ProjectMedia';
 import { MediaLightbox } from './components/MediaLightbox';
+import { Orbiting3DScene } from './components/Orbiting3DScene';
 
 function App() {
   const heroRef = useRef(null);
@@ -107,6 +108,9 @@ function App() {
         onMouseMove={handleHeroMouseMove}
         className="relative h-screen w-full overflow-hidden bg-white [mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)] flex items-center justify-center cursor-pointer"
       >
+
+        {/* 3D Orbiting Objects (Z-8 Back / Z-26 Front) */}
+        <Orbiting3DScene mousePos={mousePos} />
 
         {/* Massive Background Parallax Typography (Z-5) -- Zero Elevation on Hover */}
         <motion.div
