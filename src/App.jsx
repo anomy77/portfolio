@@ -179,9 +179,9 @@ function App() {
                 filter: 'brightness(2)'
               }}
               transition={{ duration: 0.32, ease: "easeOut" }}
-              className="absolute left-1/2 top-[48.6%] z-25 pointer-events-none select-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.85)]"
+              className="absolute left-1/2 top-[46.8%] z-25 pointer-events-none select-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.85)]"
               style={{
-                width: 'clamp(180px, 20vw, 290px)'
+                width: 'clamp(230px, 24vw, 350px)'
               }}
             >
               <img
