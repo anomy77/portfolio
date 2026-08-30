@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import heroImage from '/hero-image.png?url';
 import heroCutout from '/hero-cutout.png?url';
+import sunglassesImg from '/sunglasses.png?url';
 import fynal1 from '/images/fynal-1.png?url';
 import fynal2 from '/images/fynal-2.png?url';
 import demoMapleads from '/videos/demo-3.mp4?url';
@@ -20,9 +21,18 @@ function App() {
   const backgroundY = useTransform(scrollY, [0, 1000], [0, 350]);
 
   const [isPortraitHovered, setIsPortraitHovered] = useState(false);
+  const [isGlassesLocked, setIsGlassesLocked] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [fynalTab, setFynalTab] = useState(0);
   const [selectedLightboxProject, setSelectedLightboxProject] = useState(null);
+
+  const isWearingGlasses = isPortraitHovered || isGlassesLocked;
+
+  const toggleGlassesLock = (e) => {
+    // Only toggle if not clicking on nav links or social icons
+    if (e.target.closest('nav') || e.target.closest('a') || e.target.closest('button')) return;
+    setIsGlassesLocked(prev => !prev);
+  };
 
   const handleHeroMouseMove = (e) => {
     if (!heroRef.current) return;
@@ -91,10 +101,11 @@ function App() {
       {/* ===== SECTION 1: Full-Bleed Portrait Hero with True Z-Axis Depth ===== */}
       <section 
         ref={heroRef}
+        onClick={toggleGlassesLock}
         onMouseEnter={() => setIsPortraitHovered(true)}
         onMouseLeave={() => setIsPortraitHovered(false)}
         onMouseMove={handleHeroMouseMove}
-        className="relative h-screen w-full overflow-hidden bg-white [mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)] flex items-center justify-center"
+        className="relative h-screen w-full overflow-hidden bg-white [mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_70%,rgba(0,0,0,0.6)_85%,transparent_100%)] flex items-center justify-center cursor-pointer"
       >
 
         {/* Massive Background Parallax Typography (Z-5) -- Zero Elevation on Hover */}
@@ -145,6 +156,43 @@ function App() {
             </span>
           </motion.div>
         )}
+
+        {/* 8-Bit Pixel Sunglasses (Z-25) -- Terminal Glitch Materialization */}
+        <AnimatePresence>
+          {isWearingGlasses && (
+            <motion.div
+              key="pixel-glasses"
+              initial={{ opacity: 0, scale: 1.25, x: '-50%', y: '-50%' }}
+              animate={{ 
+                opacity: [0, 1, 0.4, 1, 0.85, 1],
+                scale: [1.18, 0.96, 1.02, 1],
+                x: ['-50%', '-49%', '-51%', '-50%'],
+                y: '-50%',
+                filter: [
+                  'hue-rotate(90deg) contrast(200%) brightness(1.5)',
+                  'hue-rotate(0deg) contrast(100%) brightness(1)'
+                ]
+              }}
+              exit={{ 
+                opacity: [1, 0.3, 0.8, 0],
+                scale: [1, 1.08, 0.92],
+                filter: 'brightness(2)'
+              }}
+              transition={{ duration: 0.32, ease: "easeOut" }}
+              className="absolute left-1/2 top-[48.6%] z-25 pointer-events-none select-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.85)]"
+              style={{
+                width: 'clamp(180px, 20vw, 290px)'
+              }}
+            >
+              <img
+                src={sunglassesImg}
+                alt="Pixel Sunglasses"
+                className="w-full h-auto"
+                style={{ imageRendering: 'pixelated' }}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Smooth bottom blend overlay (Z-15) */}
         <div className="absolute bottom-0 inset-x-0 h-48 bg-gradient-to-t from-[#09090B] via-[#09090B]/70 to-transparent z-15 pointer-events-none"></div>
