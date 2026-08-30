@@ -50,8 +50,7 @@ const MODELS = [
 ];
 
 export function Orbiting3DScene({ mousePos = { x: 0, y: 0 } }) {
-  const backCanvasRef = useRef(null);
-  const frontCanvasRef = useRef(null);
+  const canvasRef = useRef(null);
   const mousePosRef = useRef(mousePos);
 
   useEffect(() => {
@@ -59,32 +58,27 @@ export function Orbiting3DScene({ mousePos = { x: 0, y: 0 } }) {
   }, [mousePos]);
 
   useEffect(() => {
-    const backCanvas = backCanvasRef.current;
-    const frontCanvas = frontCanvasRef.current;
-    if (!backCanvas || !frontCanvas) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
     // Scene & Camera
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-    camera.position.set(0, 0, 11.5);
+    camera.position.set(0, 1.2, 11.5);
 
-    // Renderers
-    const backRenderer = new THREE.WebGLRenderer({ canvas: backCanvas, alpha: true, antialias: true });
-    const frontRenderer = new THREE.WebGLRenderer({ canvas: frontCanvas, alpha: true, antialias: true });
+    // High-Performance Unified Renderer
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
     
     const updateSize = () => {
-      const parent = backCanvas.parentElement;
+      const parent = canvas.parentElement;
       const width = parent?.clientWidth || window.innerWidth;
       const height = parent?.clientHeight || window.innerHeight;
       
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
       
-      backRenderer.setSize(width, height);
-      backRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      
-      frontRenderer.setSize(width, height);
-      frontRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     };
     updateSize();
 
@@ -101,7 +95,7 @@ export function Orbiting3DScene({ mousePos = { x: 0, y: 0 } }) {
     scene.add(dirLight2);
 
     const pointLight = new THREE.PointLight(0xffffff, 2.0, 25);
-    pointLight.position.set(0, 3.0, 6);
+    pointLight.position.set(0, 3.5, 6);
     scene.add(pointLight);
 
     // Load Models
@@ -150,13 +144,13 @@ export function Orbiting3DScene({ mousePos = { x: 0, y: 0 } }) {
       );
     });
 
-    // Elevated Halo Orbit Parameters (Compact angel ring floating above head)
+    // Elevated Halo Orbit Parameters (Floating above head like an angel ring)
     const orbitCenterX = 0.0;
-    const orbitCenterY = 2.45; // Elevated above head/crown
-    const orbitRadiusX = 2.8;  // Compact halo width
-    const orbitRadiusZ = 2.2;  // Compact halo depth
-    const pitchAngle = 0.36;   // Tilted forward gracefully
-    const rollAngle = -0.10;   // Subtle angle
+    const orbitCenterY = 2.95; // Elevated high above head crown
+    const orbitRadiusX = 3.85; // Wider halo circumference
+    const orbitRadiusZ = 2.75; // Wider halo depth
+    const pitchAngle = 0.34;   // Gracefully tilted forward
+    const rollAngle = -0.08;   // Subtle angle
     const speed = 0.00048;
 
     let animationFrameId;
@@ -170,10 +164,10 @@ export function Orbiting3DScene({ mousePos = { x: 0, y: 0 } }) {
       // Subtle mouse camera parallax
       const currentMouse = mousePosRef.current || { x: 0, y: 0 };
       const targetCamX = (currentMouse.x / (window.innerWidth || 1) - 0.5) * 0.6;
-      const targetCamY = -(currentMouse.y / (window.innerHeight || 1) - 0.5) * 0.3;
+      const targetCamY = -(currentMouse.y / (window.innerHeight || 1) - 0.5) * 0.3 + 1.2;
       camera.position.x += (targetCamX - camera.position.x) * 0.05;
       camera.position.y += (targetCamY - camera.position.y) * 0.05;
-      camera.lookAt(0, 1.8, 0);
+      camera.lookAt(0, 2.2, 0);
 
       objectGroups.forEach((item) => {
         const theta = baseAngle + item.angleOffset;
@@ -206,17 +200,8 @@ export function Orbiting3DScene({ mousePos = { x: 0, y: 0 } }) {
         item.group.scale.setScalar(scale);
       });
 
-      // Pass 1: Render BACK Canvas (Objects with Z < 0, behind head crown)
-      objectGroups.forEach((item) => {
-        item.group.visible = item.group.position.z < 0;
-      });
-      backRenderer.render(scene, camera);
-
-      // Pass 2: Render FRONT Canvas (Objects with Z >= 0, in front of hair/forehead)
-      objectGroups.forEach((item) => {
-        item.group.visible = item.group.position.z >= 0;
-      });
-      frontRenderer.render(scene, camera);
+      // Seamless single-pass 3D rendering (Zero Glitch / Zero Mesh Popping)
+      renderer.render(scene, camera);
     };
 
     animate();
@@ -226,24 +211,14 @@ export function Orbiting3DScene({ mousePos = { x: 0, y: 0 } }) {
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', updateSize);
-      backRenderer.dispose();
-      frontRenderer.dispose();
+      renderer.dispose();
     };
   }, []);
 
   return (
-    <>
-      {/* Back Orbit Layer (Z-8) -- Behind portrait cutout */}
-      <canvas
-        ref={backCanvasRef}
-        className="absolute inset-0 z-8 pointer-events-none w-full h-full"
-      />
-
-      {/* Front Orbit Layer (Z-26) -- In front of portrait cutout */}
-      <canvas
-        ref={frontCanvasRef}
-        className="absolute inset-0 z-26 pointer-events-none w-full h-full"
-      />
-    </>
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 z-22 pointer-events-none w-full h-full"
+    />
   );
 }
