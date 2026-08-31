@@ -114,18 +114,12 @@ export function Orbiting3DScene() {
             child.material.clippingPlanes = [clipPlane];
             child.material.clipShadows = true;
 
-            // Convert to crisp brutalist grayscale / monochrome (100% colorless)
-            child.material.onBeforeCompile = (shader) => {
-              shader.fragmentShader = shader.fragmentShader.replace(
-                '#include <dithering_fragment>',
-                `
-                #include <dithering_fragment>
-                float gray = dot(gl_FragColor.rgb, vec3(0.299, 0.587, 0.114));
-                gl_FragColor.rgb = vec3(gray);
-                `
-              );
-            };
-            child.material.customProgramCacheKey = () => 'grayscale_clipping';
+            // Convert to crisp brutalist grayscale / monochrome (100% colorless & crash-proof)
+            if (child.material.color) {
+              const c = child.material.color;
+              const gray = 0.299 * c.r + 0.587 * c.g + 0.114 * c.b;
+              child.material.color.setRGB(gray, gray, gray);
+            }
             child.material.needsUpdate = true;
           }
         }
