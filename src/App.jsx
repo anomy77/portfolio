@@ -1,5 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { ProjectMedia } from './components/ProjectMedia';
+import { MediaLightbox } from './components/MediaLightbox';
+import { Orbiting3DScene } from './components/Orbiting3DScene';
+import { SystemsManifesto } from './components/SystemsManifesto';
+
 const baseUrl = import.meta.env.BASE_URL || '/';
 const heroImage = `${baseUrl}hero-image.png`;
 const heroCutout = `${baseUrl}hero-cutout.png`;
@@ -12,11 +17,6 @@ const demoMarkclip = `${baseUrl}videos/demo-2.mp4`;
 const thumbMapleads = `${baseUrl}images/demo-3-thumb.jpg`;
 const thumbTubebrief = `${baseUrl}images/demo-1-thumb.jpg`;
 const thumbMarkclip = `${baseUrl}images/demo-2-thumb.jpg`;
-
-import { ProjectMedia } from './components/ProjectMedia';
-import { MediaLightbox } from './components/MediaLightbox';
-import { Orbiting3DScene } from './components/Orbiting3DScene';
-import { SystemsManifesto } from './components/SystemsManifesto';
 
 function App() {
   const heroRef = useRef(null);
